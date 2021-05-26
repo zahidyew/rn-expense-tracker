@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["es6"],
+    "allowJs": false,
+    // "checkJs": true,                       /* Report errors in .js files. */
+    "jsx": "react-native",
+    "sourceMap": true,
+    "outDir": "build",
+    "rootDir": "src",
+    "baseUrl": "./", // enables absolute path imports
+    "paths": {
+      "tests": ["tests/*"],
+      "@locales": ["src/locale/index.ts"],
+      "@redux/*": ["src/redux/*"],
+      "@models/*": ["src/models/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@img/*": ["src/img/*"],
+      "@colors": ["src/colors/colors"],
+      "@constants/*": ["src/constants/*"],
+      "@components/*": ["src/components/*"],
+      "@containers/*": ["src/containers/*"]
+    },
+    "removeComments": true,
+    "isolatedModules": true /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */,
+    "strict": true,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "preserveConstEnums": true
+  },
+  //"files": ["src/App.tsx"],
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js",
+    "build",
+    "__tests__"
+  ]
+}
