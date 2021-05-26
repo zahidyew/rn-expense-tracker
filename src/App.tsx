@@ -34,6 +34,7 @@ const MainTabs = () => {
       return 'help-circle';
     }
   };
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -56,7 +57,6 @@ const MainTabs = () => {
 };
 
 const App = () => {
-
 
   return (
     <View style={styles.viewContainer}>
