@@ -11,7 +11,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '@containers/Home';
 import Money from '@containers/Money';
-import SplashScreen from '@containers/SplashScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -63,11 +62,6 @@ const App = () => {
     <View style={styles.viewContainer}>
       <NavigationContainer>
         <Stack.Navigator>
-          {/* <Stack.Screen
-            name="Splash"
-            component={SplashScreen}
-            options={{ title: '' }}
-          /> */}
           <Stack.Screen
             name="MainPage"
             component={MainTabs}
