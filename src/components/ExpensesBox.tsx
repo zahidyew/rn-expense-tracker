@@ -1,12 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {ExpenseItemProps} from './ExpenseItem';
 
-const ExpensesBox = () => {
+interface ExpensesBoxProps {
+  data: ExpenseItemProps[];
+}
+
+const ExpensesBox = (props: ExpensesBoxProps) => {
+  const {data} = props;
+
+  const totals = data.reduce(
+    (accumulator, current) => accumulator + current.value,
+    0,
+  );
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.box}>
         <Text>Expenses</Text>
-        <Text>99.00</Text>
+        <Text>{totals}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -25,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
     shadowOpacity: 0.15,
-    shadowOffset: { width: 1, height: 2 },
+    shadowOffset: {width: 1, height: 2},
     elevation: 2,
-  }
+  },
 });

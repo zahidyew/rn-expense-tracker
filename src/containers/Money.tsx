@@ -1,36 +1,51 @@
-import ExpenseItem from '@components/ExpenseItem';
+import ExpenseItem, {ExpenseItemProps} from '@components/ExpenseItem';
 import ExpensesBox from '@components/ExpensesBox';
 import FloatingButton from '@components/FloatingButton';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import NewExpenseModal from '@components/NewExpenseModal';
+import React, {useState} from 'react';
+import {FlatList, StyleSheet, View} from 'react-native';
 
 const Money = () => {
-  const dummyData = [
+  const dummyData: ExpenseItemProps[] = [
     {
-
+      name: 'Groceries',
+      value: 44.5,
     },
     {
-
+      name: 'Dinner',
+      value: 10,
     },
   ];
   const [data, setData] = useState(dummyData);
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const addNewData = () => {
-    setData([...data, {}]);
+  const addNewData = (itemName: string, price: number) => {
+    setData([...data, {name: itemName, value: price}]);
+  };
+
+  const renderItem = (item: ExpenseItemProps) => {
+    return <ExpenseItem name={item.name} value={item.value} />;
   };
 
   return (
     <View style={styles.viewContainer}>
+      <NewExpenseModal
+        isOpen={modalVisible}
+        closeModal={setModalVisible}
+        addNewExpense={addNewData}
+      />
       <View style={styles.boxContainer}>
-        <ExpensesBox />
+        <ExpensesBox data={data} />
         <View style={styles.itemContainer}>
-          {data.map((item) => {
-            return <ExpenseItem />;
-          })}
+          <FlatList
+            data={data}
+            renderItem={({item}) => renderItem(item)}
+            keyExtractor={(_item, index) => index.toString()}
+          />
         </View>
       </View>
       <View style={styles.floatingBtnContainer}>
-        <FloatingButton onClick={addNewData} />
+        <FloatingButton onClick={() => setModalVisible(true)} />
       </View>
     </View>
   );
@@ -50,13 +65,14 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   itemContainer: {
-    paddingTop: 10,
+    flex: 1,
+    marginTop: 10,
   },
   floatingBtnContainer: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
     paddingBottom: 15,
     paddingRight: 15,
-  }
+  },
 });

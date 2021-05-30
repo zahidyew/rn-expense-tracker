@@ -1,17 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-interface props {
-  item: string;
-  value: number,
+export interface ExpenseItemProps {
+  name: string;
+  value: number;
 }
 
-const ExpenseItem = () => {
+const ExpenseItem = (props: ExpenseItemProps) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.box}>
-        <Text>Groceries</Text>
-        <Text>44.50</Text>
+        <Text>{props.name}</Text>
+        <Text>{props.value}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: 'white',
     shadowOpacity: 0.15,
-    shadowOffset: { width: 1, height: 2 },
+    shadowOffset: {width: 1, height: 2},
     elevation: 2,
-  }
+  },
 });
