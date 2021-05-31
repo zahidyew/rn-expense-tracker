@@ -4,6 +4,8 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 export interface ExpenseItemProps {
   name: string;
   value: number;
+  date: string;
+  time?: string;
 }
 
 const ExpenseItem = (props: ExpenseItemProps) => {
@@ -15,7 +17,7 @@ const ExpenseItem = (props: ExpenseItemProps) => {
           <Text>{props.value}</Text>
         </View>
         <View style={styles.subtitleRow}>
-          <Text style={styles.subtitle}>date here</Text>
+          <Text style={styles.subtitle}>{props.date}</Text>
         </View>
       </TouchableOpacity>
     </View>

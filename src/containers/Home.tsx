@@ -10,21 +10,33 @@ const Home = () => {
     {
       name: 'Groceries',
       value: 44.5,
+      date: '30/5',
     },
     {
       name: 'Dinner',
       value: 10,
+      date: '30/5',
     },
   ];
   const [data, setData] = useState(dummyData);
   const [modalVisible, setModalVisible] = useState(false);
 
+  const getDate = () => {
+    const [month, day, year] = new Date()
+      .toLocaleDateString('en-US')
+      .split('/');
+    //const [hour, minute] = new Date().toLocaleTimeString('en-US').split(/:| /);
+    const date = `${day}/${month}`;
+
+    return date;
+  };
+
   const addNewData = (itemName: string, price: number) => {
-    setData([...data, {name: itemName, value: price}]);
+    setData([...data, {name: itemName, value: price, date: getDate()}]);
   };
 
   const renderItem = (item: ExpenseItemProps) => {
-    return <ExpenseItem name={item.name} value={item.value} />;
+    return <ExpenseItem name={item.name} value={item.value} date={item.date} />;
   };
 
   return (
