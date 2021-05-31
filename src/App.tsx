@@ -1,13 +1,9 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import {StyleSheet, Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '@containers/Home';
 import Money from '@containers/Money';
@@ -23,13 +19,9 @@ const MainTabs = () => {
     size: number,
   ) => {
     if (routeName === 'Home') {
-      return focused
-        ? 'home'
-        : 'home-outline';
+      return focused ? 'home' : 'home-outline';
     } else if (routeName === 'Money') {
-      return focused
-        ? 'wallet'
-        : 'wallet-outline';
+      return focused ? 'wallet' : 'wallet-outline';
     } else {
       return 'help-circle';
     }
@@ -37,27 +29,24 @@ const MainTabs = () => {
 
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          return <Ionicons
-            name={getIcon(route.name, focused, color, size)}
-            size={size}
-            color={color} />;
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          return (
+            <Ionicons
+              name={getIcon(route.name, focused, color, size)}
+              size={size}
+              color={color}
+            />
+          );
         },
-      })}
-    >
-      <Tab.Screen
-        name="Home"
-        component={Home} />
-      <Tab.Screen
-        name="Money"
-        component={Money} />
+      })}>
+      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Money" component={Money} />
     </Tab.Navigator>
   );
 };
 
 const App = () => {
-
   return (
     <View style={styles.viewContainer}>
       <NavigationContainer>
@@ -65,10 +54,9 @@ const App = () => {
           <Stack.Screen
             name="MainPage"
             component={MainTabs}
-            options={{ title: 'ML Demo' }}
+            options={{title: 'Expense Tracker'}}
           />
         </Stack.Navigator>
-
       </NavigationContainer>
     </View>
   );
