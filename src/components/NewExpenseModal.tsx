@@ -20,22 +20,28 @@ const NewExpenseModal = (props: MyModalProps) => {
   const [itemName, setItemName] = useState('');
   const [price, setPrice] = useState('');
 
+  const clearAndCloseModal = () => {
+    setItemName('');
+    setPrice('');
+    closeModal(!isOpen);
+  };
+
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={isOpen}
       onRequestClose={() => {
-        setItemName('');
-        setPrice('');
         addNewExpense(itemName, parseFloat(price));
-        closeModal(!isOpen);
+        clearAndCloseModal();
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
           <TouchableOpacity
             style={styles.closeBtn}
-            onPress={() => closeModal(!isOpen)}>
+            onPress={() => {
+              clearAndCloseModal();
+            }}>
             <Ionicons name={'close-circle'} size={24} color={'#2196F3'} />
           </TouchableOpacity>
           <Text>New Expense</Text>
@@ -55,10 +61,8 @@ const NewExpenseModal = (props: MyModalProps) => {
           <TouchableOpacity
             style={[styles.button, styles.buttonClose]}
             onPress={() => {
-              setItemName('');
-              setPrice('');
               addNewExpense(itemName, parseFloat(price));
-              closeModal(!isOpen);
+              clearAndCloseModal();
             }}>
             <Text style={styles.textStyle}>OK</Text>
           </TouchableOpacity>
