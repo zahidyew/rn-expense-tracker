@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  Alert,
   Modal,
   StyleSheet,
   Text,
@@ -20,11 +21,34 @@ const NewExpenseModal = (props: MyModalProps) => {
   const [itemName, setItemName] = useState('');
   const [price, setPrice] = useState('');
 
-  const clearAndCloseModal = () => {
+  const clearAndCloseModal = (): void => {
     setItemName('');
     setPrice('');
     closeModal(!isOpen);
   };
+
+  // TODO: move this as helper function
+  const onlyNumbersAllowed = (input: string): void => {
+    const pattern = /[^0-9.]/gm;
+    setPrice(input.replace(pattern, ''));
+  };
+
+  const isFieldsEmpty = (itemName: string, price: string): boolean => {
+    if (itemName === '' || price === '') {
+      return true;
+    }
+    return false;
+  };
+
+  const createAlert = (): void =>
+    Alert.alert('', 'Please complete all required fields.', [
+      {
+        text: 'OK',
+        onPress: () => {
+          return;
+        },
+      },
+    ]);
 
   return (
     <Modal
@@ -48,6 +72,7 @@ const NewExpenseModal = (props: MyModalProps) => {
           <TextInput
             style={styles.modalText}
             placeholder={'Item name'}
+            autoCapitalize={'sentences'}
             value={itemName}
             onChangeText={setItemName}
           />
@@ -56,13 +81,17 @@ const NewExpenseModal = (props: MyModalProps) => {
             placeholder={'Price'}
             keyboardType={'numeric'}
             value={price}
-            onChangeText={setPrice}
+            onChangeText={onlyNumbersAllowed}
           />
           <TouchableOpacity
             style={[styles.button, styles.buttonClose]}
             onPress={() => {
-              addNewExpense(itemName, parseFloat(price));
-              clearAndCloseModal();
+              if (isFieldsEmpty(itemName, price)) {
+                createAlert();
+              } else {
+                addNewExpense(itemName, parseFloat(price));
+                clearAndCloseModal();
+              }
             }}>
             <Text style={styles.textStyle}>OK</Text>
           </TouchableOpacity>

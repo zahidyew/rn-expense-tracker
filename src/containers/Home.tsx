@@ -21,6 +21,7 @@ const Home = () => {
   const [data, setData] = useState(dummyData);
   const [modalVisible, setModalVisible] = useState(false);
 
+  // TODO: move this as helper function 
   const getDate = () => {
     const [month, day, year] = new Date()
       .toLocaleDateString('en-US')
