@@ -1,3 +1,4 @@
+import myStrings from '@locales';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {ExpenseItemProps} from './ExpenseItem';
@@ -17,7 +18,7 @@ const ExpensesBox = (props: ExpensesBoxProps) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.box}>
-        <Text>Expenses</Text>
+        <Text>{myStrings.expenses}</Text>
         <Text>{totals}</Text>
       </TouchableOpacity>
     </View>

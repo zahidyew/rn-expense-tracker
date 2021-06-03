@@ -4,6 +4,10 @@ const myStrings = {
   newExpense: 'New Expense',
   itemName: 'Item Name',
   price: 'Price',
+  expenses: 'Expenses',
+  home: 'Home',
+  money: 'Money',
+  expenseTracker: 'Expense Tracker',
 };
 
 export default myStrings;

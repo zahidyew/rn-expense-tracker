@@ -7,6 +7,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '@containers/Home';
 import Money from '@containers/Money';
+import myStrings from '@locales';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -18,9 +19,9 @@ const MainTabs = () => {
     color: string,
     size: number,
   ) => {
-    if (routeName === 'Home') {
+    if (routeName === myStrings.home) {
       return focused ? 'home' : 'home-outline';
-    } else if (routeName === 'Money') {
+    } else if (routeName === myStrings.money) {
       return focused ? 'wallet' : 'wallet-outline';
     } else {
       return 'help-circle';
@@ -40,8 +41,8 @@ const MainTabs = () => {
           );
         },
       })}>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Money" component={Money} />
+      <Tab.Screen name={myStrings.home} component={Home} />
+      <Tab.Screen name={myStrings.money} component={Money} />
     </Tab.Navigator>
   );
 };
@@ -54,7 +55,7 @@ const App = () => {
           <Stack.Screen
             name="MainPage"
             component={MainTabs}
-            options={{title: 'Expense Tracker'}}
+            options={{title: myStrings.expenseTracker}}
           />
         </Stack.Navigator>
       </NavigationContainer>
