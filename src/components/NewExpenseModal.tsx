@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  Alert,
   Modal,
   StyleSheet,
   Text,
@@ -10,6 +9,8 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import myStrings from '@locales';
+import {showOneBtnAlert} from '@helpers/Alerts';
+import {onlyNumbersAllowed} from '@helpers/Formatters';
 
 interface MyModalProps {
   isOpen: boolean;
@@ -28,32 +29,12 @@ const NewExpenseModal = (props: MyModalProps) => {
     closeModal(!isOpen);
   };
 
-  // TODO: move this as helper function
-  const onlyNumbersAllowed = (input: string): void => {
-    const pattern = /[^0-9.]/gm;
-    setPrice(input.replace(pattern, ''));
-  };
-
   const isFieldsEmpty = (itemName: string, price: string): boolean => {
     if (itemName === '' || price === '') {
       return true;
     }
     return false;
   };
-
-  const showOneBtnAlert = (
-    title: string,
-    message: string,
-    btnText: string,
-  ): void =>
-    Alert.alert(title, message, [
-      {
-        text: btnText,
-        onPress: () => {
-          return;
-        },
-      },
-    ]);
 
   return (
     <Modal
@@ -86,7 +67,7 @@ const NewExpenseModal = (props: MyModalProps) => {
             placeholder={myStrings.price}
             keyboardType={'numeric'}
             value={price}
-            onChangeText={onlyNumbersAllowed}
+            onChangeText={value => setPrice(onlyNumbersAllowed(value))}
           />
           <TouchableOpacity
             style={[styles.button, styles.buttonClose]}

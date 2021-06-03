@@ -2,6 +2,7 @@ import ExpenseItem, {ExpenseItemProps} from '@components/ExpenseItem';
 import ExpensesBox from '@components/ExpensesBox';
 import FloatingButton from '@components/FloatingButton';
 import NewExpenseModal from '@components/NewExpenseModal';
+import {getDate} from '@helpers/Dates';
 import React, {useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 
@@ -20,17 +21,6 @@ const Home = () => {
   ];
   const [data, setData] = useState(dummyData);
   const [modalVisible, setModalVisible] = useState(false);
-
-  // TODO: move this as helper function 
-  const getDate = () => {
-    const [month, day, year] = new Date()
-      .toLocaleDateString('en-US')
-      .split('/');
-    //const [hour, minute] = new Date().toLocaleTimeString('en-US').split(/:| /);
-    const date = `${day}/${month}`;
-
-    return date;
-  };
 
   const addNewData = (itemName: string, price: number) => {
     setData([...data, {name: itemName, value: price, date: getDate()}]);
