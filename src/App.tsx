@@ -1,7 +1,11 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
+import {StyleSheet, useColorScheme, View} from 'react-native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -48,9 +52,11 @@ const MainTabs = () => {
 };
 
 const App = () => {
+  const scheme = useColorScheme();
+
   return (
     <View style={styles.viewContainer}>
-      <NavigationContainer>
+      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator>
           <Stack.Screen
             name="MainPage"

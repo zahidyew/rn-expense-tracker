@@ -11,6 +11,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import myStrings from '@locales';
 import {showOneBtnAlert} from '@helpers/Alerts';
 import {onlyNumbersAllowed} from '@helpers/Formatters';
+import {useTheme} from '@react-navigation/native';
+import {Colors} from '@colors';
 
 interface MyModalProps {
   isOpen: boolean;
@@ -19,6 +21,8 @@ interface MyModalProps {
 }
 
 const NewExpenseModal = (props: MyModalProps) => {
+  const {colors} = useTheme();
+  const styles = createStyles(colors);
   const {isOpen, closeModal, addNewExpense} = props;
   const [itemName, setItemName] = useState('');
   const [price, setPrice] = useState('');
@@ -52,9 +56,9 @@ const NewExpenseModal = (props: MyModalProps) => {
             onPress={() => {
               clearAndCloseModal();
             }}>
-            <Ionicons name={'close-circle'} size={24} color={'#2196F3'} />
+            <Ionicons name={'close-circle'} size={24} color={colors.primary} />
           </TouchableOpacity>
-          <Text>{myStrings.newExpense}</Text>
+          <Text style={styles.textStyle}>{myStrings.newExpense}</Text>
           <TextInput
             style={styles.modalText}
             placeholder={myStrings.itemName}
@@ -67,7 +71,7 @@ const NewExpenseModal = (props: MyModalProps) => {
             placeholder={myStrings.price}
             keyboardType={'numeric'}
             value={price}
-            onChangeText={value => setPrice(onlyNumbersAllowed(value))}
+            onChangeText={(value) => setPrice(onlyNumbersAllowed(value))}
           />
           <TouchableOpacity
             style={[styles.button, styles.buttonClose]}
@@ -93,58 +97,59 @@ const NewExpenseModal = (props: MyModalProps) => {
 
 export default NewExpenseModal;
 
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 40,
-  },
-  modalView: {
-    width: '100%',
-    margin: 20,
-    borderRadius: 20,
-    paddingHorizontal: 35,
-    paddingBottom: 16,
-    paddingTop: 14,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
+const createStyles = (colors: Colors) => {
+  const styles = StyleSheet.create({
+    centeredView: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginHorizontal: 40,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-    backgroundColor: '#fff',
-  },
-  button: {
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    elevation: 2,
-    marginTop: 8,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    height: 32,
-    width: '100%',
-    marginVertical: 10,
-    borderWidth: 0.5,
-    borderColor: 'gray',
-    paddingLeft: 8,
-  },
-  closeBtn: {
-    alignSelf: 'flex-start',
-  },
-});
+    modalView: {
+      width: '100%',
+      margin: 20,
+      borderRadius: 20,
+      paddingHorizontal: 35,
+      paddingBottom: 16,
+      paddingTop: 14,
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5,
+      backgroundColor: colors.background,
+    },
+    button: {
+      borderRadius: 10,
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      elevation: 2,
+      marginTop: 8,
+    },
+    buttonClose: {
+      backgroundColor: colors.primary,
+    },
+    textStyle: {
+      color: colors.text,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    modalText: {
+      height: 32,
+      width: '100%',
+      marginVertical: 10,
+      borderWidth: 0.5,
+      borderColor: 'gray',
+      paddingLeft: 8,
+      color: colors.text,
+    },
+    closeBtn: {
+      alignSelf: 'flex-start',
+    },
+  });
+  return styles;
+};
