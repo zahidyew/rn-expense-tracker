@@ -1,10 +1,11 @@
-import ExpenseItem, {ExpenseItemProps} from '@components/ExpenseItem';
+import DateBar from '@components/DateBar';
+import ExpenseItem, { ExpenseItemProps } from '@components/ExpenseItem';
 import ExpensesBox from '@components/ExpensesBox';
 import FloatingButton from '@components/FloatingButton';
 import NewExpenseModal from '@components/NewExpenseModal';
-import {getDate} from '@helpers/Dates';
-import React, {useState} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import { getDate } from '@helpers/Dates';
+import React, { useState } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
 
 const Home = () => {
   const dummyData: ExpenseItemProps[] = [
@@ -23,7 +24,10 @@ const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const addNewData = (itemName: string, price: number) => {
-    setData([...data, {name: itemName, value: price, date: getDate()}]);
+    setData([
+      ...data,
+      { name: itemName, value: price, date: getDate('dayMonth') },
+    ]);
   };
 
   const renderItem = (item: ExpenseItemProps) => {
@@ -38,11 +42,13 @@ const Home = () => {
         addNewExpense={addNewData}
       />
       <View style={styles.boxContainer}>
+        <DateBar />
+        <View style={styles.spacer}></View>
         <ExpensesBox data={data} />
         <View style={styles.itemContainer}>
           <FlatList
             data={data}
-            renderItem={({item}) => renderItem(item)}
+            renderItem={({ item }) => renderItem(item)}
             keyExtractor={(_item, index) => index.toString()}
           />
         </View>
@@ -57,6 +63,9 @@ const Home = () => {
 export default Home;
 
 const styles = StyleSheet.create({
+  spacer: {
+    marginTop: 10,
+  },
   viewContainer: {
     flex: 1,
   },
