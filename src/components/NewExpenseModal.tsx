@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   Modal,
   StyleSheet,
@@ -9,10 +9,10 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import myStrings from '@locales';
-import {showOneBtnAlert} from '@helpers/Alerts';
-import {onlyNumbersAllowed} from '@helpers/Formatters';
-import {useTheme} from '@react-navigation/native';
-import {Colors} from '@colors';
+import { showOneBtnAlert } from '@helpers/Alerts';
+import { onlyNumbersAllowed } from '@helpers/Formatters';
+import { useTheme } from '@react-navigation/native';
+import { Colors } from '@colors';
 
 interface MyModalProps {
   isOpen: boolean;
@@ -21,9 +21,9 @@ interface MyModalProps {
 }
 
 const NewExpenseModal = (props: MyModalProps) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
-  const {isOpen, closeModal, addNewExpense} = props;
+  const { isOpen, closeModal, addNewExpense } = props;
   const [itemName, setItemName] = useState('');
   const [price, setPrice] = useState('');
 
@@ -121,7 +121,7 @@ const createStyles = (colors: Colors) => {
       shadowOpacity: 0.25,
       shadowRadius: 4,
       elevation: 5,
-      backgroundColor: colors.background,
+      backgroundColor: colors.card,
     },
     button: {
       borderRadius: 10,
