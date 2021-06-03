@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import myStrings from '@locales';
 
 interface MyModalProps {
   isOpen: boolean;
@@ -40,10 +41,14 @@ const NewExpenseModal = (props: MyModalProps) => {
     return false;
   };
 
-  const createAlert = (): void =>
-    Alert.alert('', 'Please complete all required fields.', [
+  const showOneBtnAlert = (
+    title: string,
+    message: string,
+    btnText: string,
+  ): void =>
+    Alert.alert(title, message, [
       {
-        text: 'OK',
+        text: btnText,
         onPress: () => {
           return;
         },
@@ -68,17 +73,17 @@ const NewExpenseModal = (props: MyModalProps) => {
             }}>
             <Ionicons name={'close-circle'} size={24} color={'#2196F3'} />
           </TouchableOpacity>
-          <Text>New Expense</Text>
+          <Text>{myStrings.newExpense}</Text>
           <TextInput
             style={styles.modalText}
-            placeholder={'Item name'}
+            placeholder={myStrings.itemName}
             autoCapitalize={'sentences'}
             value={itemName}
             onChangeText={setItemName}
           />
           <TextInput
             style={styles.modalText}
-            placeholder={'Price'}
+            placeholder={myStrings.price}
             keyboardType={'numeric'}
             value={price}
             onChangeText={onlyNumbersAllowed}
@@ -87,13 +92,17 @@ const NewExpenseModal = (props: MyModalProps) => {
             style={[styles.button, styles.buttonClose]}
             onPress={() => {
               if (isFieldsEmpty(itemName, price)) {
-                createAlert();
+                showOneBtnAlert(
+                  '',
+                  myStrings.alertCompleteAllRequiredFields,
+                  myStrings.ok,
+                );
               } else {
                 addNewExpense(itemName, parseFloat(price));
                 clearAndCloseModal();
               }
             }}>
-            <Text style={styles.textStyle}>OK</Text>
+            <Text style={styles.textStyle}>{myStrings.ok}</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -11,7 +11,7 @@
     "baseUrl": "./", // enables absolute path imports
     "paths": {
       "tests": ["tests/*"],
-      "@locales": ["src/locale/index.ts"],
+      "@locales": ["src/locales/english"],
       "@redux/*": ["src/redux/*"],
       "@models/*": ["src/models/*"],
       "@helpers/*": ["src/helpers/*"],

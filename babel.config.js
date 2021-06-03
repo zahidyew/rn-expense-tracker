@@ -6,17 +6,17 @@ module.exports = {
       {
         root: ['./'],
         alias: {
-          '@locales': './build/locale/index.js',
-          "@redux": "./build/redux",
-          "@models": "./build/models",
-          "@helpers": "./build/helpers",
-          "@img": "./src/img",
-          "@colors": "./build/colors/colors",
-          "@constants": "./build/constants",
-          "@components": "./build/components",
-          "@containers": "./build/containers"
-        }
-      }
-    ]
-  ]
+          '@locales': './build/locales/english',
+          '@redux': './build/redux',
+          '@models': './build/models',
+          '@helpers': './build/helpers',
+          '@img': './src/img',
+          '@colors': './build/colors/colors',
+          '@constants': './build/constants',
+          '@components': './build/components',
+          '@containers': './build/containers',
+        },
+      },
+    ],
+  ],
 };
