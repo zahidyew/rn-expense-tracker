@@ -6,22 +6,13 @@ import NewExpenseModal from '@components/NewExpenseModal';
 import { getDate } from '@helpers/Dates';
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { addNewExpense } from '@redux/slices/expenses';
 
 const Home = () => {
-  const dummyData: ExpenseItemProps[] = [
-    {
-      name: 'Groceries',
-      value: 44.5,
-      date: '30/5/2020',
-    },
-    {
-      name: 'Dinner',
-      value: 10,
-      date: '30/1/2021',
-    },
-  ];
-  const [data, setData] = useState(dummyData);
   const [modalVisible, setModalVisible] = useState(false);
+  const dataFromStore = useSelector((state) => state.expenses);
+  const dispatch = useDispatch();
   /* const [displayedData, setDisplayedData] = useState(
     data.filter((item) => {
       const [day, month, year] = item.date.split('/');
@@ -30,10 +21,13 @@ const Home = () => {
   ); */
 
   const addNewData = (itemName: string, price: number) => {
-    setData([
-      ...data,
-      { name: itemName, value: price, date: getDate('dayMonthYear') },
-    ]);
+    dispatch(
+      addNewExpense({
+        name: itemName,
+        value: price,
+        date: getDate('dayMonthYear'),
+      }),
+    );
   };
 
   const renderItem = (item: ExpenseItemProps) => {
@@ -50,10 +44,10 @@ const Home = () => {
       <View style={styles.boxContainer}>
         <DateBar />
         <View style={styles.spacer}></View>
-        <ExpensesBox data={data} />
+        <ExpensesBox data={dataFromStore} />
         <View style={styles.itemContainer}>
           <FlatList
-            data={data}
+            data={dataFromStore}
             renderItem={({ item }) => renderItem(item)}
             keyExtractor={(_item, index) => index.toString()}
           />
