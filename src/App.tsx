@@ -1,17 +1,19 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import {StyleSheet, useColorScheme, View} from 'react-native';
+import { StyleSheet, useColorScheme, View } from 'react-native';
 import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '@containers/Home';
 import Money from '@containers/Money';
 import myStrings from '@locales';
+import store from '@redux/store';
+import { Provider } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -34,8 +36,8 @@ const MainTabs = () => {
 
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
           return (
             <Ionicons
               name={getIcon(route.name, focused, color, size)}
@@ -56,15 +58,18 @@ const App = () => {
 
   return (
     <View style={styles.viewContainer}>
-      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="MainPage"
-            component={MainTabs}
-            options={{title: myStrings.expenseTracker}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer
+          theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="MainPage"
+              component={MainTabs}
+              options={{ title: myStrings.expenseTracker }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     </View>
   );
 };
