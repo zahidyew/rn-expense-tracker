@@ -3,32 +3,19 @@ import ExpenseItem, { ExpenseItemProps } from '@components/ExpenseItem';
 import ExpensesBox from '@components/ExpensesBox';
 import FloatingButton from '@components/FloatingButton';
 import NewExpenseModal from '@components/NewExpenseModal';
-import { getDate } from '@helpers/Dates';
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { useAppSelector, useAppDispatch } from '@redux/reduxHooks';
-import { addNewExpense } from '@redux/slices/expenses';
+import { useAppSelector } from '@redux/reduxHooks';
 
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const dataFromStore = useAppSelector((state) => state.expenses);
-  const dispatch = useAppDispatch();
   /* const [displayedData, setDisplayedData] = useState(
     data.filter((item) => {
       const [day, month, year] = item.date.split('/');
       return parseInt(month) != 5;
     }),
   ); */
-
-  const addNewData = (itemName: string, price: number) => {
-    dispatch(
-      addNewExpense({
-        name: itemName,
-        value: price,
-        date: getDate('dayMonthYear'),
-      }),
-    );
-  };
 
   const renderItem = (item: ExpenseItemProps) => {
     return <ExpenseItem name={item.name} value={item.value} date={item.date} />;
@@ -39,7 +26,7 @@ const Home = () => {
       <NewExpenseModal
         isOpen={modalVisible}
         closeModal={setModalVisible}
-        addNewExpense={addNewData}
+        //addNewExpense={addNewData}
       />
       <View style={styles.boxContainer}>
         <DateBar />

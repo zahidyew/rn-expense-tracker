@@ -13,19 +13,23 @@ import { showOneBtnAlert } from '@helpers/Alerts';
 import { onlyNumbersAllowed } from '@helpers/Formatters';
 import { useTheme } from '@react-navigation/native';
 import { Colors } from '@colors';
+import { useAppDispatch } from '@redux/reduxHooks';
+import { addNewExpense } from '@redux/slices/expenses';
+import { getDate } from '@helpers/Dates';
 
 interface MyModalProps {
   isOpen: boolean;
   closeModal: (isOpen: boolean) => void;
-  addNewExpense: (itemName: string, price: number) => void;
+  //addNewExpense: (itemName: string, price: number) => void;
 }
 
 const NewExpenseModal = (props: MyModalProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
-  const { isOpen, closeModal, addNewExpense } = props;
+  const { isOpen, closeModal } = props;
   const [itemName, setItemName] = useState('');
   const [price, setPrice] = useState('');
+  const dispatch = useAppDispatch();
 
   const clearAndCloseModal = (): void => {
     setItemName('');
@@ -46,7 +50,6 @@ const NewExpenseModal = (props: MyModalProps) => {
       transparent={true}
       visible={isOpen}
       onRequestClose={() => {
-        addNewExpense(itemName, parseFloat(price));
         clearAndCloseModal();
       }}>
       <View style={styles.centeredView}>
@@ -83,7 +86,13 @@ const NewExpenseModal = (props: MyModalProps) => {
                   myStrings.ok,
                 );
               } else {
-                addNewExpense(itemName, parseFloat(price));
+                dispatch(
+                  addNewExpense({
+                    name: itemName,
+                    value: parseFloat(price),
+                    date: getDate('dayMonthYear'),
+                  }),
+                );
                 clearAndCloseModal();
               }
             }}>
