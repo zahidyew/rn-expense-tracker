@@ -12,7 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '@containers/Home';
 import Money from '@containers/Money';
 import myStrings from '@locales';
-import store from '@redux/store';
+import { store } from '@redux/store';
 import { Provider } from 'react-redux';
 
 const Tab = createBottomTabNavigator();

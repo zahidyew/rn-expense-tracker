@@ -1,5 +1,5 @@
 import { ExpenseItemProps } from '@components/ExpenseItem';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const dummyData: ExpenseItemProps[] = [
   {
@@ -18,7 +18,7 @@ export const expensesSlice = createSlice({
   name: 'expenses',
   initialState: dummyData,
   reducers: {
-    addNewExpense: (state, action) => {
+    addNewExpense: (state, action: PayloadAction<ExpenseItemProps>) => {
       // for array/object, you have to return a new array/object
       return [...state, action.payload];
     },

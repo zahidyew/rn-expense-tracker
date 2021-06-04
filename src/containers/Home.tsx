@@ -6,13 +6,13 @@ import NewExpenseModal from '@components/NewExpenseModal';
 import { getDate } from '@helpers/Dates';
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '@redux/reduxHooks';
 import { addNewExpense } from '@redux/slices/expenses';
 
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const dataFromStore = useSelector((state) => state.expenses);
-  const dispatch = useDispatch();
+  const dataFromStore = useAppSelector((state) => state.expenses);
+  const dispatch = useAppDispatch();
   /* const [displayedData, setDisplayedData] = useState(
     data.filter((item) => {
       const [day, month, year] = item.date.split('/');
