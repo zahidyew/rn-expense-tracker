@@ -1,6 +1,5 @@
 import { Colors } from '@colors';
 import { getDate } from '@helpers/Dates';
-import myStrings from '@locales';
 import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -8,13 +7,15 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 const DateBar = () => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
-  const month = getDate('month');
+  const month = getDate('monthInText');
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.box}>
-        <Text style={styles.text}>{month}</Text>
-      </TouchableOpacity>
+      <View style={styles.box}>
+        <TouchableOpacity onPress={() => console.log('pressed')}>
+          <Text style={styles.text}>{month}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

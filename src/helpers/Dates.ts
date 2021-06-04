@@ -2,6 +2,7 @@ type DateFormat =
   | 'weekday'
   | 'day'
   | 'month'
+  | 'monthInText'
   | 'year'
   | 'dayMonth'
   | 'monthYear'
@@ -15,11 +16,13 @@ export const getDate = (format: DateFormat) => {
     case 'weekday':
       return new Date().toLocaleDateString('en-US', { weekday: 'short' });
     case 'day':
-      return new Date().toLocaleDateString('en-US', { day: 'numeric' });
+      return day;
     case 'month':
-      return new Date().toLocaleDateString('en-US', { month: 'long' });
+      return month;
     case 'year':
       return year;
+    case 'monthInText':
+      return new Date().toLocaleDateString('en-US', { month: 'long' });
     case 'dayMonth':
       return `${day}/${month}`;
     case 'monthYear':
