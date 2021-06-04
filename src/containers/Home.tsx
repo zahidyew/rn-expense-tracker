@@ -18,7 +18,7 @@ const Home = () => {
   ); */
 
   const renderItem = (item: ExpenseItemProps) => {
-    return <ExpenseItem name={item.name} value={item.value} date={item.date} />;
+    return <ExpenseItem name={item.name} price={item.price} date={item.date} />;
   };
 
   return (

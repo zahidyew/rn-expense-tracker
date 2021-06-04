@@ -15,7 +15,7 @@ const ExpensesBox = (props: ExpensesBoxProps) => {
   const { data } = props;
 
   const totals = data.reduce(
-    (accumulator, current) => accumulator + current.value,
+    (accumulator, current) => accumulator + current.price,
     0,
   );
 

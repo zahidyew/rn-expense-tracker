@@ -20,7 +20,9 @@ import { getDate } from '@helpers/Dates';
 interface MyModalProps {
   isOpen: boolean;
   closeModal: (isOpen: boolean) => void;
-  //addNewExpense: (itemName: string, price: number) => void;
+
+  itemName?: string;
+  itemPrice?: number;
 }
 
 const NewExpenseModal = (props: MyModalProps) => {
@@ -89,7 +91,7 @@ const NewExpenseModal = (props: MyModalProps) => {
                 dispatch(
                   addNewExpense({
                     name: itemName,
-                    value: parseFloat(price),
+                    price: parseFloat(price),
                     date: getDate('dayMonthYear'),
                   }),
                 );

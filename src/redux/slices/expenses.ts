@@ -4,12 +4,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const dummyData: ExpenseItemProps[] = [
   {
     name: 'Groceries',
-    value: 44.5,
+    price: 44.5,
     date: '30/5/2020',
   },
   {
     name: 'Dinner',
-    value: 10,
+    price: 10,
     date: '30/1/2021',
   },
 ];
