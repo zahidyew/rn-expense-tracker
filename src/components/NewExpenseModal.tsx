@@ -14,29 +14,36 @@ import { onlyNumbersAllowed } from '@helpers/Formatters';
 import { useTheme } from '@react-navigation/native';
 import { Colors } from '@colors';
 import { useAppDispatch } from '@redux/reduxHooks';
-import { addNewExpense } from '@redux/slices/expenses';
+import { addNewExpense, updateExpense } from '@redux/slices/expenses';
 import { getDate } from '@helpers/Dates';
 
 interface MyModalProps {
   isOpen: boolean;
   closeModal: (isOpen: boolean) => void;
 
-  itemName?: string;
+  expenseName?: string;
   itemPrice?: number;
+  itemDate?: string;
+  isUpdate?: boolean;
 }
 
 const NewExpenseModal = (props: MyModalProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
-  const { isOpen, closeModal } = props;
-  const [itemName, setItemName] = useState('');
-  const [price, setPrice] = useState('');
+  const { isOpen, closeModal, expenseName, itemPrice, itemDate, isUpdate } =
+    props;
+  const [itemName, setItemName] = useState(expenseName ? expenseName : '');
+  const [price, setPrice] = useState(itemPrice ? itemPrice.toString() : '');
   const dispatch = useAppDispatch();
 
   const clearAndCloseModal = (): void => {
-    setItemName('');
-    setPrice('');
-    closeModal(!isOpen);
+    if (isUpdate) {
+      closeModal(!isOpen);
+    } else {
+      setItemName('');
+      setPrice('');
+      closeModal(!isOpen);
+    }
   };
 
   const isFieldsEmpty = (itemName: string, price: string): boolean => {
@@ -44,6 +51,27 @@ const NewExpenseModal = (props: MyModalProps) => {
       return true;
     }
     return false;
+  };
+
+  const handleSubmit = (itemName: string, price: string): void => {
+    if (isUpdate) {
+      dispatch(
+        updateExpense({
+          name: itemName,
+          price: parseFloat(price),
+          date: itemDate as string,
+        }),
+      );
+    } else {
+      dispatch(
+        addNewExpense({
+          name: itemName,
+          price: parseFloat(price),
+          date: getDate('dayMonthYear'),
+        }),
+      );
+    }
+    clearAndCloseModal();
   };
 
   return (
@@ -88,14 +116,7 @@ const NewExpenseModal = (props: MyModalProps) => {
                   myStrings.ok,
                 );
               } else {
-                dispatch(
-                  addNewExpense({
-                    name: itemName,
-                    price: parseFloat(price),
-                    date: getDate('dayMonthYear'),
-                  }),
-                );
-                clearAndCloseModal();
+                handleSubmit(itemName, price);
               }
             }}>
             <Text style={styles.textStyle}>{myStrings.ok}</Text>

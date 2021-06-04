@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import NewExpenseModal from './NewExpenseModal';
 
+// TODO: item needs a proper ID for update and deletion
+// TODO: create a model for this
 export interface ExpenseItemProps {
   name: string;
   price: number;
@@ -33,8 +35,10 @@ const ExpenseItem = (props: ExpenseItemProps) => {
       <NewExpenseModal
         isOpen={modalVisible}
         closeModal={setModalVisible}
-        itemName={name}
+        expenseName={name}
         itemPrice={price}
+        itemDate={date}
+        isUpdate={true}
       />
     </View>
   );
