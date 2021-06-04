@@ -12,21 +12,27 @@ const Home = () => {
     {
       name: 'Groceries',
       value: 44.5,
-      date: '30/5',
+      date: '30/5/2020',
     },
     {
       name: 'Dinner',
       value: 10,
-      date: '30/5',
+      date: '30/1/2021',
     },
   ];
   const [data, setData] = useState(dummyData);
   const [modalVisible, setModalVisible] = useState(false);
+  /* const [displayedData, setDisplayedData] = useState(
+    data.filter((item) => {
+      const [day, month, year] = item.date.split('/');
+      return parseInt(month) != 5;
+    }),
+  ); */
 
   const addNewData = (itemName: string, price: number) => {
     setData([
       ...data,
-      { name: itemName, value: price, date: getDate('dayMonth') },
+      { name: itemName, value: price, date: getDate('dayMonthYear') },
     ]);
   };
 
