@@ -1,18 +1,18 @@
-import {Colors} from '@colors';
+import { Colors } from '@colors';
 import myStrings from '@locales';
-import {useTheme} from '@react-navigation/native';
+import { useTheme } from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {ExpenseItemProps} from './ExpenseItem';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ExpenseItemProps } from './ExpenseItem';
 
 interface ExpensesBoxProps {
   data: ExpenseItemProps[];
 }
 
 const ExpensesBox = (props: ExpensesBoxProps) => {
-  const {colors} = useTheme();
+  const { colors } = useTheme();
   const styles = createStyles(colors);
-  const {data} = props;
+  const { data } = props;
 
   const totals = data.reduce(
     (accumulator, current) => accumulator + current.value,
@@ -21,10 +21,10 @@ const ExpensesBox = (props: ExpensesBoxProps) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.box}>
+      <View style={styles.box}>
         <Text style={styles.title}>{myStrings.expenses}</Text>
         <Text style={styles.title}>{totals}</Text>
-      </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -43,7 +43,7 @@ const createStyles = (colors: Colors) => {
       justifyContent: 'center',
       backgroundColor: colors.card,
       shadowOpacity: 0.15,
-      shadowOffset: {width: 1, height: 2},
+      shadowOffset: { width: 1, height: 2 },
       elevation: 2,
     },
     title: {
