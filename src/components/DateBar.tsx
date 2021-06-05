@@ -1,21 +1,24 @@
 import { Colors } from '@colors';
 import { getDate } from '@helpers/Dates';
 import { useTheme } from '@react-navigation/native';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import DateModal from './DateModal';
 
 const DateBar = () => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
   const month = getDate('monthInText');
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <TouchableOpacity onPress={() => console.log('pressed')}>
+        <TouchableOpacity onPress={() => setIsOpen(true)}>
           <Text style={styles.text}>{month}</Text>
         </TouchableOpacity>
       </View>
+      <DateModal isOpen={isOpen} closeModal={setIsOpen} />
     </View>
   );
 };
