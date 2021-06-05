@@ -1,11 +1,12 @@
 import DateBar from '@components/DateBar';
-import ExpenseItem, { ExpenseItemProps } from '@components/ExpenseItem';
+import ExpenseItem from '@components/ExpenseItem';
 import ExpensesBox from '@components/ExpensesBox';
 import FloatingButton from '@components/FloatingButton';
 import NewExpenseModal from '@components/NewExpenseModal';
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useAppSelector } from '@redux/reduxHooks';
+import { Expense } from '@models/Expense';
 
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -17,17 +18,20 @@ const Home = () => {
     }),
   ); */
 
-  const renderItem = (item: ExpenseItemProps) => {
-    return <ExpenseItem name={item.name} price={item.price} date={item.date} />;
+  const renderItem = (item: Expense) => {
+    return (
+      <ExpenseItem
+        id={item.id}
+        name={item.name}
+        price={item.price}
+        date={item.date}
+      />
+    );
   };
 
   return (
     <View style={styles.viewContainer}>
-      <NewExpenseModal
-        isOpen={modalVisible}
-        closeModal={setModalVisible}
-        //addNewExpense={addNewData}
-      />
+      <NewExpenseModal isOpen={modalVisible} closeModal={setModalVisible} />
       <View style={styles.boxContainer}>
         <DateBar />
         <View style={styles.spacer}></View>

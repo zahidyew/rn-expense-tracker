@@ -1,12 +1,12 @@
 import { Colors } from '@colors';
 import myStrings from '@locales';
+import { Expense } from '@models/Expense';
 import { useTheme } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ExpenseItemProps } from './ExpenseItem';
+import { StyleSheet, Text, View } from 'react-native';
 
 interface ExpensesBoxProps {
-  data: ExpenseItemProps[];
+  data: Expense[];
 }
 
 const ExpensesBox = (props: ExpensesBoxProps) => {

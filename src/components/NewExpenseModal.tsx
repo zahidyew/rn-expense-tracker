@@ -16,24 +16,24 @@ import { Colors } from '@colors';
 import { useAppDispatch } from '@redux/reduxHooks';
 import { addNewExpense, updateExpense } from '@redux/slices/expenses';
 import { getDate } from '@helpers/Dates';
+import { Expense } from '@models/Expense';
 
 interface MyModalProps {
   isOpen: boolean;
   closeModal: (isOpen: boolean) => void;
 
-  expenseName?: string;
-  itemPrice?: number;
-  itemDate?: string;
+  expense?: Expense;
   isUpdate?: boolean;
 }
 
 const NewExpenseModal = (props: MyModalProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
-  const { isOpen, closeModal, expenseName, itemPrice, itemDate, isUpdate } =
-    props;
-  const [itemName, setItemName] = useState(expenseName ? expenseName : '');
-  const [price, setPrice] = useState(itemPrice ? itemPrice.toString() : '');
+  const { isOpen, closeModal, expense, isUpdate } = props;
+  const [itemName, setItemName] = useState(expense?.name ? expense.name : '');
+  const [price, setPrice] = useState(
+    expense?.price ? expense.price.toString() : '',
+  );
   const dispatch = useAppDispatch();
 
   const clearAndCloseModal = (): void => {
@@ -53,18 +53,24 @@ const NewExpenseModal = (props: MyModalProps) => {
     return false;
   };
 
+  const generateId = () => {
+    return new Date().valueOf();
+  };
+
   const handleSubmit = (itemName: string, price: string): void => {
     if (isUpdate) {
       dispatch(
         updateExpense({
+          id: expense?.id as number,
           name: itemName,
           price: parseFloat(price),
-          date: itemDate as string,
+          date: expense?.date as string,
         }),
       );
     } else {
       dispatch(
         addNewExpense({
+          id: generateId(),
           name: itemName,
           price: parseFloat(price),
           date: getDate('dayMonthYear'),

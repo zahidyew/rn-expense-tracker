@@ -1,22 +1,14 @@
 import { Colors } from '@colors';
+import { Expense } from '@models/Expense';
 import { useTheme } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import NewExpenseModal from './NewExpenseModal';
 
-// TODO: item needs a proper ID for update and deletion
-// TODO: create a model for this
-export interface ExpenseItemProps {
-  name: string;
-  price: number;
-  date: string;
-  time?: string;
-}
-
-const ExpenseItem = (props: ExpenseItemProps) => {
+const ExpenseItem = (props: Expense) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
-  const { name, price, date } = props;
+  const { id, name, price, date } = props;
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
@@ -35,9 +27,7 @@ const ExpenseItem = (props: ExpenseItemProps) => {
       <NewExpenseModal
         isOpen={modalVisible}
         closeModal={setModalVisible}
-        expenseName={name}
-        itemPrice={price}
-        itemDate={date}
+        expense={{ id, name, price, date }}
         isUpdate={true}
       />
     </View>
