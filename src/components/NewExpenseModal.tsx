@@ -38,8 +38,6 @@ const NewExpenseModal = (props: MyModalProps) => {
 
   const clearAndCloseModal = (): void => {
     if (isUpdate) {
-      //setItemName(expense?.name as string);
-      //setPrice(expense?.price.toString() as string);
       closeModal(!isOpen);
     } else {
       setItemName('');
@@ -123,6 +121,10 @@ const NewExpenseModal = (props: MyModalProps) => {
       transparent={true}
       visible={isOpen}
       onRequestClose={() => {
+        if (isUpdate) {
+          setItemName(expense?.name as string);
+          setPrice(expense?.price.toString() as string);
+        }
         clearAndCloseModal();
       }}>
       <View style={styles.centeredView}>
@@ -130,6 +132,10 @@ const NewExpenseModal = (props: MyModalProps) => {
           <TouchableOpacity
             style={styles.closeBtn}
             onPress={() => {
+              if (isUpdate) {
+                setItemName(expense?.name as string);
+                setPrice(expense?.price.toString() as string);
+              }
               clearAndCloseModal();
             }}>
             <Ionicons name={'close-circle'} size={24} color={colors.primary} />
