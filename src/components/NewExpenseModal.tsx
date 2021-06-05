@@ -14,7 +14,11 @@ import { onlyNumbersAllowed } from '@helpers/Formatters';
 import { useTheme } from '@react-navigation/native';
 import { Colors } from '@colors';
 import { useAppDispatch } from '@redux/reduxHooks';
-import { addNewExpense, updateExpense } from '@redux/slices/expenses';
+import {
+  addNewExpense,
+  deleteExpense,
+  updateExpense,
+} from '@redux/slices/expenses';
 import { getDate } from '@helpers/Dates';
 import { Expense } from '@models/Expense';
 
@@ -105,6 +109,7 @@ const NewExpenseModal = (props: MyModalProps) => {
       <TouchableOpacity
         style={[styles.button, { backgroundColor: 'red' }]}
         onPress={() => {
+          dispatch(deleteExpense(expense?.id as number));
           clearAndCloseModal();
         }}>
         <Text style={styles.textStyle}>
