@@ -8,6 +8,9 @@ const myStrings = {
   home: 'Home',
   money: 'Money',
   expenseTracker: 'Expense Tracker',
+  udpate: 'Update',
+  delete: 'Delete',
+  submit: 'Submit',
 };
 
 export default myStrings;

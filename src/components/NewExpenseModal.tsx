@@ -38,6 +38,8 @@ const NewExpenseModal = (props: MyModalProps) => {
 
   const clearAndCloseModal = (): void => {
     if (isUpdate) {
+      //setItemName(expense?.name as string);
+      //setPrice(expense?.price.toString() as string);
       closeModal(!isOpen);
     } else {
       setItemName('');
@@ -80,6 +82,41 @@ const NewExpenseModal = (props: MyModalProps) => {
     clearAndCloseModal();
   };
 
+  const createSubmitOrUpdateBtn = () => {
+    if (isUpdate) {
+      return (
+        // Update btn
+        <Text style={styles.textStyle}>
+          {myStrings.udpate}{' '}
+          <Ionicons name={'create'} size={15} color={'white'} />
+        </Text>
+      );
+    } else {
+      return (
+        // Submit btn
+        <Text style={styles.textStyle}>
+          {myStrings.submit}{' '}
+          <Ionicons name={'chevron-forward'} size={15} color={'white'} />
+        </Text>
+      );
+    }
+  };
+
+  const createDeleteBtn = () => {
+    return (
+      <TouchableOpacity
+        style={[styles.button, { backgroundColor: 'red' }]}
+        onPress={() => {
+          clearAndCloseModal();
+        }}>
+        <Text style={styles.textStyle}>
+          {myStrings.delete}{' '}
+          <Ionicons name={'trash'} size={15} color={'white'} />
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <Modal
       animationType="slide"
@@ -112,21 +149,24 @@ const NewExpenseModal = (props: MyModalProps) => {
             value={price}
             onChangeText={(value) => setPrice(onlyNumbersAllowed(value))}
           />
-          <TouchableOpacity
-            style={[styles.button, styles.buttonClose]}
-            onPress={() => {
-              if (isFieldsEmpty(itemName, price)) {
-                showOneBtnAlert(
-                  '',
-                  myStrings.alertCompleteAllRequiredFields,
-                  myStrings.ok,
-                );
-              } else {
-                handleSubmit(itemName, price);
-              }
-            }}>
-            <Text style={styles.textStyle}>{myStrings.ok}</Text>
-          </TouchableOpacity>
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => {
+                if (isFieldsEmpty(itemName, price)) {
+                  showOneBtnAlert(
+                    '',
+                    myStrings.alertCompleteAllRequiredFields,
+                    myStrings.ok,
+                  );
+                } else {
+                  handleSubmit(itemName, price);
+                }
+              }}>
+              {createSubmitOrUpdateBtn()}
+            </TouchableOpacity>
+            {isUpdate && createDeleteBtn()}
+          </View>
         </View>
       </View>
     </Modal>
@@ -163,12 +203,10 @@ const createStyles = (colors: Colors) => {
     },
     button: {
       borderRadius: 10,
-      paddingVertical: 10,
-      paddingHorizontal: 20,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
       elevation: 2,
       marginTop: 8,
-    },
-    buttonClose: {
       backgroundColor: colors.primary,
     },
     textStyle: {
@@ -187,6 +225,11 @@ const createStyles = (colors: Colors) => {
     },
     closeBtn: {
       alignSelf: 'flex-start',
+    },
+    buttonsContainer: {
+      flexDirection: 'row',
+      width: '100%',
+      justifyContent: 'space-around',
     },
   });
   return styles;
