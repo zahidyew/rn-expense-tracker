@@ -11,6 +11,7 @@ const myStrings = {
   udpate: 'Update',
   delete: 'Delete',
   submit: 'Submit',
+  updateExpense: 'Update Expense',
 };
 
 export default myStrings;

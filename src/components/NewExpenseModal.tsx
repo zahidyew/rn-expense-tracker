@@ -145,7 +145,9 @@ const NewExpenseModal = (props: MyModalProps) => {
             }}>
             <Ionicons name={'close-circle'} size={24} color={colors.primary} />
           </TouchableOpacity>
-          <Text style={styles.textStyle}>{myStrings.newExpense}</Text>
+          <Text style={styles.textStyle}>
+            {isUpdate ? myStrings.updateExpense : myStrings.newExpense}
+          </Text>
           <TextInput
             style={styles.modalText}
             placeholder={myStrings.itemName}
