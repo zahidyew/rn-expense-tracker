@@ -1,5 +1,7 @@
 import { Colors } from '@colors';
 import { useTheme } from '@react-navigation/native';
+import { useAppDispatch } from '@redux/reduxHooks';
+import { updateMonth } from '@redux/slices/date';
 import React from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -8,13 +10,13 @@ interface DateModalProps {
   isOpen: boolean;
   month: string;
   closeModal: (isOpen: boolean) => void;
-  selectedMonth: (setMonth: string) => void;
 }
 
 const DateModal = (props: DateModalProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
-  const { isOpen, month, closeModal, selectedMonth } = props;
+  const { isOpen, month, closeModal } = props;
+  const dispatch = useAppDispatch();
   const monthsArray = [
     'Jan',
     'Feb',
@@ -29,6 +31,20 @@ const DateModal = (props: DateModalProps) => {
     'Nov',
     'Dec',
   ];
+
+  const displayMonth = (item: string, index: number) => {
+    return (
+      <TouchableOpacity
+        key={index}
+        style={styles.monthContainer}
+        onPress={() => {
+          dispatch(updateMonth(item));
+          closeModal(!isOpen);
+        }}>
+        <Text style={styles.textStyle}>{item}</Text>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <Modal
@@ -50,17 +66,7 @@ const DateModal = (props: DateModalProps) => {
               if (index > 5) {
                 return;
               }
-              return (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.monthContainer}
-                  onPress={() => {
-                    selectedMonth(item);
-                    closeModal(!isOpen);
-                  }}>
-                  <Text style={styles.textStyle}>{item}</Text>
-                </TouchableOpacity>
-              );
+              return displayMonth(item, index);
             })}
           </View>
           <View style={styles.rowContainer}>
@@ -68,17 +74,7 @@ const DateModal = (props: DateModalProps) => {
               if (index < 6) {
                 return;
               }
-              return (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.monthContainer}
-                  onPress={() => {
-                    selectedMonth(item);
-                    closeModal(!isOpen);
-                  }}>
-                  <Text style={styles.textStyle}>{item}</Text>
-                </TouchableOpacity>
-              );
+              return displayMonth(item, index);
             })}
           </View>
         </View>

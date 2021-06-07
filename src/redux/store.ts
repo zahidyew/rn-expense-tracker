@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import expensesReducer from './slices/expenses';
+import dateReducer from './slices/date';
 
 export const store = configureStore({
   reducer: {
     expenses: expensesReducer,
+    date: dateReducer,
   },
 });
 

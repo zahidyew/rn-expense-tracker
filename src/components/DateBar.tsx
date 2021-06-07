@@ -1,6 +1,6 @@
 import { Colors } from '@colors';
-import { getDate } from '@helpers/Dates';
 import { useTheme } from '@react-navigation/native';
+import { useAppSelector } from '@redux/reduxHooks';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DateModal from './DateModal';
@@ -8,21 +8,21 @@ import DateModal from './DateModal';
 const DateBar = () => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
-  const [month, setMonth] = useState(getDate('monthInText'));
   const [isOpen, setIsOpen] = useState(false);
+  const dateFromStore = useAppSelector((state) => state.date);
+  const { month } = dateFromStore;
 
   return (
     <View style={styles.container}>
       <View style={styles.box}>
         <TouchableOpacity onPress={() => setIsOpen(true)}>
-          <Text style={styles.text}>{month}</Text>
+          <Text style={styles.text}>{month.substr(0, 3)}</Text>
         </TouchableOpacity>
       </View>
       <DateModal
         isOpen={isOpen}
-        month={month}
+        month={month.substr(0, 3)}
         closeModal={setIsOpen}
-        selectedMonth={setMonth}
       />
     </View>
   );
