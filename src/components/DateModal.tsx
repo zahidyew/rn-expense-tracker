@@ -6,14 +6,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface DateModalProps {
   isOpen: boolean;
+  month: string;
   closeModal: (isOpen: boolean) => void;
+  selectedMonth: (setMonth: string) => void;
 }
 
 const DateModal = (props: DateModalProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
-  const { isOpen, closeModal } = props;
-  const months = [
+  const { isOpen, month, closeModal, selectedMonth } = props;
+  const monthsArray = [
     'Jan',
     'Feb',
     'Mar',
@@ -44,7 +46,7 @@ const DateModal = (props: DateModalProps) => {
             <Ionicons name={'close-circle'} size={24} color={colors.primary} />
           </TouchableOpacity>
           <View style={styles.rowContainer}>
-            {months.map((item, index) => {
+            {monthsArray.map((item, index) => {
               if (index > 5) {
                 return;
               }
@@ -53,7 +55,7 @@ const DateModal = (props: DateModalProps) => {
                   key={index}
                   style={styles.monthContainer}
                   onPress={() => {
-                    console.log(item);
+                    selectedMonth(item);
                     closeModal(!isOpen);
                   }}>
                   <Text style={styles.textStyle}>{item}</Text>
@@ -62,7 +64,7 @@ const DateModal = (props: DateModalProps) => {
             })}
           </View>
           <View style={styles.rowContainer}>
-            {months.map((item, index) => {
+            {monthsArray.map((item, index) => {
               if (index < 6) {
                 return;
               }
@@ -71,7 +73,7 @@ const DateModal = (props: DateModalProps) => {
                   key={index}
                   style={styles.monthContainer}
                   onPress={() => {
-                    console.log(item);
+                    selectedMonth(item);
                     closeModal(!isOpen);
                   }}>
                   <Text style={styles.textStyle}>{item}</Text>

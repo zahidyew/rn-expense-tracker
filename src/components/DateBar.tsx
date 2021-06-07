@@ -8,7 +8,7 @@ import DateModal from './DateModal';
 const DateBar = () => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
-  const month = getDate('monthInText');
+  const [month, setMonth] = useState(getDate('monthInText'));
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -18,7 +18,12 @@ const DateBar = () => {
           <Text style={styles.text}>{month}</Text>
         </TouchableOpacity>
       </View>
-      <DateModal isOpen={isOpen} closeModal={setIsOpen} />
+      <DateModal
+        isOpen={isOpen}
+        month={month}
+        closeModal={setIsOpen}
+        selectedMonth={setMonth}
+      />
     </View>
   );
 };
