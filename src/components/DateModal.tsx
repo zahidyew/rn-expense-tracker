@@ -32,16 +32,19 @@ const DateModal = (props: DateModalProps) => {
     'Dec',
   ];
 
-  const displayMonth = (item: string, index: number) => {
+  const displayMonth = (month: string, index: number) => {
     return (
       <TouchableOpacity
         key={index}
         style={styles.monthContainer}
         onPress={() => {
-          dispatch(updateMonth(item));
+          const monthNumber = index + 1;
+          dispatch(
+            updateMonth({ month: month, monthNumber: monthNumber.toString() }),
+          );
           closeModal(!isOpen);
         }}>
-        <Text style={styles.textStyle}>{item}</Text>
+        <Text style={styles.textStyle}>{month}</Text>
       </TouchableOpacity>
     );
   };
