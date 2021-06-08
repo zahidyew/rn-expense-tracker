@@ -21,14 +21,11 @@ export const expensesSlice = createSlice({
     deleteExpense: (state, action: PayloadAction<number>) => {
       return state.filter((item) => item.id !== action.payload);
     },
-    filterExpense: (state, action: PayloadAction<string>) => {
-      // todo: remove this reducer
-    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addNewExpense, updateExpense, deleteExpense, filterExpense } =
+export const { addNewExpense, updateExpense, deleteExpense } =
   expensesSlice.actions;
 
 export default expensesSlice.reducer;
