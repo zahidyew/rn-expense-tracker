@@ -3,20 +3,24 @@ import ExpenseItem from '@components/ExpenseItem';
 import ExpensesBox from '@components/ExpensesBox';
 import FloatingButton from '@components/FloatingButton';
 import NewExpenseModal from '@components/NewExpenseModal';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useAppSelector } from '@redux/reduxHooks';
 import { Expense } from '@models/Expense';
 
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
-  const dataFromStore = useAppSelector((state) => state.expenses);
-  /* const [displayedData, setDisplayedData] = useState(
-    data.filter((item) => {
-      const [day, month, year] = item.date.split('/');
-      return parseInt(month) != 5;
-    }),
-  ); */
+  const expensesDataFromStore = useAppSelector((state) => state.expenses);
+  const { month, monthNumber } = useAppSelector((state) => state.date);
+  const [expenses, setExpenses] = useState(expensesDataFromStore);
+
+  useEffect(() => {
+    setExpenses(
+      expensesDataFromStore.filter(
+        (item) => item.date.split('/')[1] == monthNumber,
+      ),
+    );
+  }, [month, expensesDataFromStore]);
 
   const renderItem = (item: Expense) => {
     return (
@@ -35,10 +39,10 @@ const Home = () => {
       <View style={styles.boxContainer}>
         <DateBar />
         <View style={styles.spacer}></View>
-        <ExpensesBox data={dataFromStore} />
+        <ExpensesBox data={expenses} />
         <View style={styles.itemContainer}>
           <FlatList
-            data={dataFromStore}
+            data={expenses}
             renderItem={({ item }) => renderItem(item)}
             keyExtractor={(_item, index) => index.toString()}
           />
