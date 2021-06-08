@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Modal,
   StyleSheet,
@@ -34,11 +34,15 @@ const NewExpenseModal = (props: MyModalProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
   const { isOpen, closeModal, expense, isUpdate } = props;
-  const [itemName, setItemName] = useState(expense?.name ? expense.name : '');
-  const [price, setPrice] = useState(
-    expense?.price ? expense.price.toString() : '',
-  );
+  const [itemName, setItemName] = useState('');
+  const [price, setPrice] = useState('');
   const dispatch = useAppDispatch();
+
+  // this make sure itemName & price has the correct value everytime props change
+  useEffect(() => {
+    setItemName(expense?.name ? expense.name : '');
+    setPrice(expense?.price ? expense.price.toString() : '');
+  }, [props]);
 
   const clearAndCloseModal = (): void => {
     if (isUpdate) {
