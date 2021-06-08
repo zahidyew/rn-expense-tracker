@@ -12,8 +12,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '@containers/Home';
 import Money from '@containers/Money';
 import myStrings from '@locales';
-import { store } from '@redux/store';
+import { store, persistor } from '@redux/store';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -59,16 +60,18 @@ const App = () => {
   return (
     <View style={styles.viewContainer}>
       <Provider store={store}>
-        <NavigationContainer
-          theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="MainPage"
-              component={MainTabs}
-              options={{ title: myStrings.expenseTracker }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <PersistGate loading={null} persistor={persistor}>
+          <NavigationContainer
+            theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="MainPage"
+                component={MainTabs}
+                options={{ title: myStrings.expenseTracker }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </PersistGate>
       </Provider>
     </View>
   );

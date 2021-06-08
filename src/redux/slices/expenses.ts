@@ -1,24 +1,11 @@
 import { Expense } from '@models/Expense';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const dummyData: Expense[] = [
-  {
-    id: 1,
-    name: 'Groceries',
-    price: 44.5,
-    date: '30/4/2020',
-  },
-  {
-    id: 2,
-    name: 'Dinner',
-    price: 10,
-    date: '22/5/2021',
-  },
-];
+const initialData: Expense[] = [];
 
 export const expensesSlice = createSlice({
   name: 'expenses',
-  initialState: dummyData,
+  initialState: initialData,
   reducers: {
     addNewExpense: (state, action: PayloadAction<Expense>) => {
       // for array/object, you have to return a new array/object
@@ -34,11 +21,14 @@ export const expensesSlice = createSlice({
     deleteExpense: (state, action: PayloadAction<number>) => {
       return state.filter((item) => item.id !== action.payload);
     },
+    filterExpense: (state, action: PayloadAction<string>) => {
+      // todo: remove this reducer
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addNewExpense, updateExpense, deleteExpense } =
+export const { addNewExpense, updateExpense, deleteExpense, filterExpense } =
   expensesSlice.actions;
 
 export default expensesSlice.reducer;
