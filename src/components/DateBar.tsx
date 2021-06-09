@@ -19,7 +19,7 @@ const DateBar = (props: DateBarProps) => {
     <View style={styles.container}>
       <View style={styles.box}>
         <TouchableOpacity onPress={() => setIsOpen(true)}>
-          <Text style={styles.text}>{month.substr(0, 3)}</Text>
+          <Text style={styles.text}>{`${month.substr(0, 3)}, ${year}`}</Text>
         </TouchableOpacity>
       </View>
       <DateModal
