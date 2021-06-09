@@ -5,4 +5,4 @@
 import { AppRegistry } from 'react-native';
 import App from './App';
 
-AppRegistry.registerComponent('MLDemo', () => App);
+AppRegistry.registerComponent('ExpenseyExpenseTracker', () => App);
