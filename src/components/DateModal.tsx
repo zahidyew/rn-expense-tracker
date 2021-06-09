@@ -80,7 +80,7 @@ const DateModal = (props: DateModalProps) => {
             <Ionicons name={'close-circle'} size={24} color={colors.primary} />
           </TouchableOpacity>
           <View style={styles.container}>
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={styles.yearContainer}>
               <TouchableOpacity onPress={() => dispatch(decrementYear())}>
                 <Ionicons
                   name={'chevron-back'}
@@ -88,9 +88,7 @@ const DateModal = (props: DateModalProps) => {
                   color={colors.primary}
                 />
               </TouchableOpacity>
-              <Text style={[styles.textStyle, { paddingHorizontal: 4 }]}>
-                {year}
-              </Text>
+              <Text style={[styles.textStyle, styles.yearText]}>{year}</Text>
               <TouchableOpacity onPress={() => dispatch(incrementYear())}>
                 <Ionicons
                   name={'chevron-forward'}
@@ -178,6 +176,13 @@ const createStyles = (colors: Colors) => {
     container: {
       marginTop: 10,
       marginBottom: 10,
+    },
+    yearContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    yearText: {
+      paddingHorizontal: 4,
     },
   });
   return styles;
