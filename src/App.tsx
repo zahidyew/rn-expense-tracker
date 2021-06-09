@@ -11,10 +11,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '@containers/Home';
 import Charts from '@containers/Charts';
-import myStrings from '@locales';
+import myStrings from '@locales/english';
 import { store, persistor } from '@redux/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { containers } from '@styles/commonStyles';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -58,7 +59,7 @@ const App = () => {
   const scheme = useColorScheme();
 
   return (
-    <View style={styles.viewContainer}>
+    <View style={containers.viewContainer}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <NavigationContainer
@@ -77,10 +78,6 @@ const App = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  viewContainer: {
-    flex: 1,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default App;

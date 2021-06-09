@@ -1,5 +1,5 @@
 import { Colors } from '@colors';
-import myStrings from '@locales';
+import myStrings from '@locales/english';
 import { Expense } from '@models/Expense';
 import { useTheme } from '@react-navigation/native';
 import React from 'react';

@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import myStrings from '@locales';
+import myStrings from '@locales/english';
 import { showOneBtnAlert } from '@helpers/Alerts';
 import { onlyNumbersAllowed } from '@helpers/Formatters';
 import { useTheme } from '@react-navigation/native';
