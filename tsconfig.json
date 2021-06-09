@@ -11,7 +11,7 @@
     "baseUrl": "./", // enables absolute path imports
     "paths": {
       "tests": ["tests/*"],
-      "@locales": ["src/locales/english"],
+      "@locales/*": ["src/locales/*"],
       "@redux/*": ["src/redux/*"],
       "@models/*": ["src/models/*"],
       "@helpers/*": ["src/helpers/*"],
@@ -19,7 +19,8 @@
       "@colors": ["src/colors/colors"],
       "@constants/*": ["src/constants/*"],
       "@components/*": ["src/components/*"],
-      "@containers/*": ["src/containers/*"]
+      "@containers/*": ["src/containers/*"],
+      "@styles/*": ["src/styles/*"]
     },
     "removeComments": true,
     "isolatedModules": true /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */,

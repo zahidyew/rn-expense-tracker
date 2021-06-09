@@ -6,7 +6,7 @@ module.exports = {
       {
         root: ['./'],
         alias: {
-          '@locales': './build/locales/english',
+          '@locales': './build/locales',
           '@redux': './build/redux',
           '@models': './build/models',
           '@helpers': './build/helpers',
@@ -15,6 +15,7 @@ module.exports = {
           '@constants': './build/constants',
           '@components': './build/components',
           '@containers': './build/containers',
+          '@styles': './build/styles',
         },
       },
     ],

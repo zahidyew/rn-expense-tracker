@@ -104,7 +104,6 @@
 				E3B39AAD2AE99F620DBBB60A /* Pods-MLDemo-MLDemoTests.debug.xcconfig */,
 				E7050204ECF256F708ADBDB7 /* Pods-MLDemo-MLDemoTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -113,7 +112,6 @@
 			children = (
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
