@@ -21,12 +21,17 @@ export const dateSlice = createSlice({
       state.month = action.payload.month;
       state.monthNumber = action.payload.monthNumber;
     },
-    updateYear: (state, action: PayloadAction<string>) => {
-      state.year = action.payload;
+    incrementYear: (state) => {
+      const incrementedYear = parseInt(state.year) + 1;
+      state.year = incrementedYear.toString();
+    },
+    decrementYear: (state) => {
+      const decrementedYear = parseInt(state.year) - 1;
+      state.year = decrementedYear.toString();
     },
   },
 });
 
-export const { updateMonth, updateYear } = dateSlice.actions;
+export const { updateMonth, incrementYear, decrementYear } = dateSlice.actions;
 
 export default dateSlice.reducer;
