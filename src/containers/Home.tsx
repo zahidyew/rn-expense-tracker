@@ -11,7 +11,7 @@ import { Expense } from '@models/Expense';
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const expensesDataFromStore = useAppSelector((state) => state.expenses);
-  const { month, monthNumber } = useAppSelector((state) => state.date);
+  const { month, monthNumber, year } = useAppSelector((state) => state.date);
   const [expenses, setExpenses] = useState(expensesDataFromStore);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Home = () => {
     <View style={styles.viewContainer}>
       <NewExpenseModal isOpen={modalVisible} closeModal={setModalVisible} />
       <View style={styles.boxContainer}>
-        <DateBar />
+        <DateBar month={month} year={year} />
         <View style={styles.spacer}></View>
         <ExpensesBox data={expenses} />
         <View style={styles.itemContainer}>
