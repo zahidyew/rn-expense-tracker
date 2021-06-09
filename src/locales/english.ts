@@ -12,6 +12,7 @@ const myStrings = {
   delete: 'Delete',
   submit: 'Submit',
   updateExpense: 'Update Expense',
+  charts: 'Charts',
 };
 
 export default myStrings;

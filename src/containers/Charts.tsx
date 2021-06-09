@@ -1,15 +1,15 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-const Money = () => {
+const Charts = () => {
   return (
     <View style={styles.viewContainer}>
-      <Text style={styles.title}> Money</Text>
+      <Text style={styles.title}> Charts </Text>
     </View>
   );
 };
 
-export default Money;
+export default Charts;
 
 const styles = StyleSheet.create({
   viewContainer: {
@@ -19,5 +19,6 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: 'center',
+    color: 'white',
   },
 });

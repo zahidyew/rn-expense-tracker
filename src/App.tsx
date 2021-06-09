@@ -10,7 +10,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '@containers/Home';
-import Money from '@containers/Money';
+import Charts from '@containers/Charts';
 import myStrings from '@locales';
 import { store, persistor } from '@redux/store';
 import { Provider } from 'react-redux';
@@ -28,8 +28,8 @@ const MainTabs = () => {
   ) => {
     if (routeName === myStrings.home) {
       return focused ? 'home' : 'home-outline';
-    } else if (routeName === myStrings.money) {
-      return focused ? 'wallet' : 'wallet-outline';
+    } else if (routeName === myStrings.charts) {
+      return focused ? 'bar-chart' : 'bar-chart-outline';
     } else {
       return 'help-circle';
     }
@@ -49,7 +49,7 @@ const MainTabs = () => {
         },
       })}>
       <Tab.Screen name={myStrings.home} component={Home} />
-      <Tab.Screen name={myStrings.money} component={Money} />
+      <Tab.Screen name={myStrings.charts} component={Charts} />
     </Tab.Navigator>
   );
 };
