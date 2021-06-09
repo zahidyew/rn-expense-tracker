@@ -9,13 +9,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 interface DateModalProps {
   isOpen: boolean;
   month: string;
+  year: string;
   closeModal: (isOpen: boolean) => void;
 }
 
 const DateModal = (props: DateModalProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
-  const { isOpen, month, closeModal } = props;
+  const { isOpen, year, closeModal } = props;
   const dispatch = useAppDispatch();
   const monthsArray = [
     'Jan',
@@ -33,10 +34,17 @@ const DateModal = (props: DateModalProps) => {
   ];
 
   const displayMonth = (month: string, index: number) => {
+    const selectedMonth = month === props.month;
+    const mostRightColumn = index === 5 || index === 11;
+
     return (
       <TouchableOpacity
         key={index}
-        style={styles.monthContainer}
+        style={
+          mostRightColumn
+            ? styles.monthContainer
+            : [styles.monthContainer, styles.rightSideBorder]
+        }
         onPress={() => {
           const monthNumber = index + 1;
           dispatch(
@@ -44,7 +52,14 @@ const DateModal = (props: DateModalProps) => {
           );
           closeModal(!isOpen);
         }}>
-        <Text style={styles.textStyle}>{month}</Text>
+        <Text
+          style={
+            selectedMonth
+              ? [styles.textStyle, styles.selectedMonthText]
+              : styles.textStyle
+          }>
+          {month}
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -64,21 +79,26 @@ const DateModal = (props: DateModalProps) => {
             }}>
             <Ionicons name={'close-circle'} size={24} color={colors.primary} />
           </TouchableOpacity>
-          <View style={styles.rowContainer}>
-            {monthsArray.map((item, index) => {
-              if (index > 5) {
-                return;
-              }
-              return displayMonth(item, index);
-            })}
-          </View>
-          <View style={styles.rowContainer}>
-            {monthsArray.map((item, index) => {
-              if (index < 6) {
-                return;
-              }
-              return displayMonth(item, index);
-            })}
+          <View style={styles.container}>
+            <View>
+              <Text style={styles.textStyle}>{year}</Text>
+            </View>
+            <View style={styles.rowContainer}>
+              {monthsArray.map((item, index) => {
+                if (index > 5) {
+                  return;
+                }
+                return displayMonth(item, index);
+              })}
+            </View>
+            <View style={styles.rowContainer}>
+              {monthsArray.map((item, index) => {
+                if (index < 6) {
+                  return;
+                }
+                return displayMonth(item, index);
+              })}
+            </View>
           </View>
         </View>
       </View>
@@ -116,7 +136,6 @@ const createStyles = (colors: Colors) => {
     },
     textStyle: {
       color: colors.text,
-      fontWeight: 'bold',
       textAlign: 'center',
     },
     closeBtn: {
@@ -127,9 +146,22 @@ const createStyles = (colors: Colors) => {
       justifyContent: 'space-between',
       width: '100%',
       paddingTop: 10,
+      paddingBottom: 10,
     },
     monthContainer: {
       flex: 1,
+    },
+    selectedMonthText: {
+      color: 'green',
+      fontWeight: 'bold',
+    },
+    rightSideBorder: {
+      borderRightWidth: 1,
+      borderColor: colors.border,
+    },
+    container: {
+      marginTop: 10,
+      marginBottom: 10,
     },
   });
   return styles;
