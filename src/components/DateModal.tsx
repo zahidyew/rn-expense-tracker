@@ -1,7 +1,7 @@
 import { Colors } from '@colors';
 import { useTheme } from '@react-navigation/native';
 import { useAppDispatch } from '@redux/reduxHooks';
-import { updateMonth } from '@redux/slices/date';
+import { updateMonth, decrementYear, incrementYear } from '@redux/slices/date';
 import React from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -80,8 +80,24 @@ const DateModal = (props: DateModalProps) => {
             <Ionicons name={'close-circle'} size={24} color={colors.primary} />
           </TouchableOpacity>
           <View style={styles.container}>
-            <View>
-              <Text style={styles.textStyle}>{year}</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+              <TouchableOpacity onPress={() => dispatch(decrementYear())}>
+                <Ionicons
+                  name={'chevron-back'}
+                  size={14}
+                  color={colors.primary}
+                />
+              </TouchableOpacity>
+              <Text style={[styles.textStyle, { paddingHorizontal: 4 }]}>
+                {year}
+              </Text>
+              <TouchableOpacity onPress={() => dispatch(incrementYear())}>
+                <Ionicons
+                  name={'chevron-forward'}
+                  size={14}
+                  color={colors.primary}
+                />
+              </TouchableOpacity>
             </View>
             <View style={styles.rowContainer}>
               {monthsArray.map((item, index) => {

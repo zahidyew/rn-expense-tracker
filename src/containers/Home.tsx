@@ -17,10 +17,12 @@ const Home = () => {
   useEffect(() => {
     setExpenses(
       expensesDataFromStore.filter(
-        (item) => item.date.split('/')[1] == monthNumber,
+        (item) =>
+          item.date.split('/')[1] == monthNumber &&
+          item.date.split('/')[2] == year,
       ),
     );
-  }, [month, expensesDataFromStore]);
+  }, [monthNumber, year, expensesDataFromStore]);
 
   const renderItem = (item: Expense) => {
     return (
