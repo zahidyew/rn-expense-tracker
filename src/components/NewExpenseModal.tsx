@@ -21,6 +21,7 @@ import {
 } from '@redux/slices/expenses';
 import { getDate } from '@helpers/Dates';
 import { Expense } from '@models/Expense';
+import { createGlobalStyles } from '@styles/globalStyles';
 
 interface MyModalProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ interface MyModalProps {
 const NewExpenseModal = (props: MyModalProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
+  const globalStyles = createGlobalStyles(colors);
   const { isOpen, closeModal, expense, isUpdate } = props;
   const [itemName, setItemName] = useState('');
   const [price, setPrice] = useState('');
@@ -88,11 +90,23 @@ const NewExpenseModal = (props: MyModalProps) => {
     clearAndCloseModal();
   };
 
+  const submitBtnIsPressed = () => {
+    if (isFieldsEmpty(itemName, price)) {
+      showOneBtnAlert(
+        '',
+        myStrings.alertCompleteAllRequiredFields,
+        myStrings.ok,
+      );
+    } else {
+      handleSubmit(itemName, price);
+    }
+  };
+
   const createSubmitOrUpdateBtn = () => {
     if (isUpdate) {
       return (
         // Update btn
-        <Text style={styles.textStyle}>
+        <Text style={globalStyles.buttonText}>
           {myStrings.udpate}{' '}
           <Ionicons name={'create'} size={15} color={'white'} />
         </Text>
@@ -100,7 +114,7 @@ const NewExpenseModal = (props: MyModalProps) => {
     } else {
       return (
         // Submit btn
-        <Text style={styles.textStyle}>
+        <Text style={globalStyles.buttonText}>
           {myStrings.submit}{' '}
           <Ionicons name={'chevron-forward'} size={15} color={'white'} />
         </Text>
@@ -111,12 +125,12 @@ const NewExpenseModal = (props: MyModalProps) => {
   const createDeleteBtn = () => {
     return (
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: 'red' }]}
+        style={styles.deleteButton}
         onPress={() => {
           dispatch(deleteExpense(expense?.id as number));
           clearAndCloseModal();
         }}>
-        <Text style={styles.textStyle}>
+        <Text style={globalStyles.buttonText}>
           {myStrings.delete}{' '}
           <Ionicons name={'trash'} size={15} color={'white'} />
         </Text>
@@ -136,8 +150,8 @@ const NewExpenseModal = (props: MyModalProps) => {
         }
         clearAndCloseModal();
       }}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
+      <View style={globalStyles.centeredModalContainer}>
+        <View style={globalStyles.modalViewContainer}>
           <TouchableOpacity
             style={styles.closeBtn}
             onPress={() => {
@@ -168,18 +182,8 @@ const NewExpenseModal = (props: MyModalProps) => {
           />
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                if (isFieldsEmpty(itemName, price)) {
-                  showOneBtnAlert(
-                    '',
-                    myStrings.alertCompleteAllRequiredFields,
-                    myStrings.ok,
-                  );
-                } else {
-                  handleSubmit(itemName, price);
-                }
-              }}>
+              style={globalStyles.button}
+              onPress={submitBtnIsPressed}>
               {createSubmitOrUpdateBtn()}
             </TouchableOpacity>
             {isUpdate && createDeleteBtn()}
@@ -193,52 +197,21 @@ const NewExpenseModal = (props: MyModalProps) => {
 export default NewExpenseModal;
 
 const createStyles = (colors: Colors) => {
+  const globalStyles = createGlobalStyles(colors);
   const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginHorizontal: 40,
-    },
-    modalView: {
-      width: '100%',
-      margin: 20,
-      borderRadius: 20,
-      paddingHorizontal: 35,
-      paddingBottom: 16,
-      paddingTop: 14,
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
-      backgroundColor: colors.card,
-    },
-    button: {
-      borderRadius: 10,
-      paddingVertical: 8,
-      paddingHorizontal: 12,
-      elevation: 2,
-      marginTop: 8,
-      backgroundColor: colors.primary,
-    },
     textStyle: {
-      color: colors.text,
+      ...globalStyles.normalText,
       fontWeight: 'bold',
       textAlign: 'center',
     },
     modalText: {
+      ...globalStyles.normalText,
       height: 32,
       width: '100%',
       marginVertical: 10,
       borderWidth: 0.5,
       borderColor: 'gray',
       paddingLeft: 8,
-      color: colors.text,
     },
     closeBtn: {
       alignSelf: 'flex-start',
@@ -247,6 +220,10 @@ const createStyles = (colors: Colors) => {
       flexDirection: 'row',
       width: '100%',
       justifyContent: 'space-around',
+    },
+    deleteButton: {
+      ...globalStyles.button,
+      backgroundColor: 'red',
     },
   });
   return styles;

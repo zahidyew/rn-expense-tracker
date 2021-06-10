@@ -2,6 +2,7 @@ import { Colors } from '@colors';
 import myStrings from '@locales/english';
 import { Expense } from '@models/Expense';
 import { useTheme } from '@react-navigation/native';
+import { createGlobalStyles } from '@styles/globalStyles';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
@@ -12,6 +13,7 @@ interface ExpensesBoxProps {
 const ExpensesBox = (props: ExpensesBoxProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
+  const globalStyles = createGlobalStyles(colors);
   const { data } = props;
 
   const totals = data.reduce(
@@ -22,8 +24,8 @@ const ExpensesBox = (props: ExpensesBoxProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <Text style={styles.title}>{myStrings.expenses}</Text>
-        <Text style={styles.title}>{totals}</Text>
+        <Text style={globalStyles.normalText}>{myStrings.expenses}</Text>
+        <Text style={globalStyles.normalText}>{totals}</Text>
       </View>
     </View>
   );
@@ -45,9 +47,6 @@ const createStyles = (colors: Colors) => {
       shadowOpacity: 0.15,
       shadowOffset: { width: 1, height: 2 },
       elevation: 2,
-    },
-    title: {
-      color: colors.text,
     },
   });
   return styles;

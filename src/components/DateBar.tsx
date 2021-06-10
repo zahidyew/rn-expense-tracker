@@ -1,5 +1,6 @@
 import { Colors } from '@colors';
 import { useTheme } from '@react-navigation/native';
+import { createGlobalStyles } from '@styles/globalStyles';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DateModal from './DateModal';
@@ -12,6 +13,7 @@ interface DateBarProps {
 const DateBar = (props: DateBarProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
+  const globalStyles = createGlobalStyles(colors);
   const [isOpen, setIsOpen] = useState(false);
   const { month, year } = props;
 
@@ -19,7 +21,9 @@ const DateBar = (props: DateBarProps) => {
     <View style={styles.container}>
       <View style={styles.box}>
         <TouchableOpacity onPress={() => setIsOpen(true)}>
-          <Text style={styles.text}>{`${month.substr(0, 3)}, ${year}`}</Text>
+          <Text style={globalStyles.normalText}>
+            {`${month.substr(0, 3)}, ${year}`}
+          </Text>
         </TouchableOpacity>
       </View>
       <DateModal
@@ -49,9 +53,6 @@ const createStyles = (colors: Colors) => {
       shadowOpacity: 0.15,
       shadowOffset: { width: 1, height: 2 },
       elevation: 2,
-    },
-    text: {
-      color: colors.text,
     },
   });
   return styles;

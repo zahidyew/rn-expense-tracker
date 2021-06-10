@@ -1,6 +1,7 @@
 import { Colors } from '@colors';
 import { Expense } from '@models/Expense';
 import { useTheme } from '@react-navigation/native';
+import { createGlobalStyles } from '@styles/globalStyles';
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import NewExpenseModal from './NewExpenseModal';
@@ -8,6 +9,7 @@ import NewExpenseModal from './NewExpenseModal';
 const ExpenseItem = (props: Expense) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
+  const globalStyles = createGlobalStyles(colors);
   const { id, name, price, date } = props;
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -17,11 +19,11 @@ const ExpenseItem = (props: Expense) => {
         style={styles.box}
         onPress={() => setModalVisible(true)}>
         <View style={styles.mainRow}>
-          <Text style={styles.mainText}>{name}</Text>
-          <Text style={styles.mainText}>{price}</Text>
+          <Text style={globalStyles.normalText}>{name}</Text>
+          <Text style={globalStyles.normalText}>{price}</Text>
         </View>
         <View style={styles.subtitleRow}>
-          <Text style={styles.subtitle}>{date}</Text>
+          <Text style={globalStyles.subtitleText}>{date}</Text>
         </View>
       </TouchableOpacity>
       <NewExpenseModal
@@ -58,16 +60,8 @@ const createStyles = (colors: Colors) => {
       alignItems: 'center',
       justifyContent: 'space-between',
     },
-    mainText: {
-      color: colors.text,
-    },
     subtitleRow: {
       paddingHorizontal: 16,
-    },
-    subtitle: {
-      fontSize: 12,
-      color: colors.text,
-      opacity: 0.5,
     },
   });
   return styles;

@@ -2,6 +2,7 @@ import { Colors } from '@colors';
 import { useTheme } from '@react-navigation/native';
 import { useAppDispatch } from '@redux/reduxHooks';
 import { updateMonth, decrementYear, incrementYear } from '@redux/slices/date';
+import { createGlobalStyles } from '@styles/globalStyles';
 import React from 'react';
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -16,6 +17,7 @@ interface DateModalProps {
 const DateModal = (props: DateModalProps) => {
   const { colors } = useTheme();
   const styles = createStyles(colors);
+  const globalStyles = createGlobalStyles(colors);
   const { isOpen, year, closeModal } = props;
   const dispatch = useAppDispatch();
   const monthsArray = [
@@ -55,8 +57,8 @@ const DateModal = (props: DateModalProps) => {
         <Text
           style={
             selectedMonth
-              ? [styles.textStyle, styles.selectedMonthText]
-              : styles.textStyle
+              ? [globalStyles.centeredText, styles.selectedMonthText]
+              : globalStyles.centeredText
           }>
           {month}
         </Text>
@@ -70,8 +72,8 @@ const DateModal = (props: DateModalProps) => {
       transparent={true}
       visible={isOpen}
       onRequestClose={() => {}}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
+      <View style={globalStyles.centeredModalContainer}>
+        <View style={globalStyles.modalViewContainer}>
           <TouchableOpacity
             style={styles.closeBtn}
             onPress={() => {
@@ -88,7 +90,9 @@ const DateModal = (props: DateModalProps) => {
                   color={colors.primary}
                 />
               </TouchableOpacity>
-              <Text style={[styles.textStyle, styles.yearText]}>{year}</Text>
+              <Text style={[globalStyles.centeredText, styles.yearText]}>
+                {year}
+              </Text>
               <TouchableOpacity onPress={() => dispatch(incrementYear())}>
                 <Ionicons
                   name={'chevron-forward'}
@@ -124,34 +128,6 @@ export default DateModal;
 
 const createStyles = (colors: Colors) => {
   const styles = StyleSheet.create({
-    centeredView: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginHorizontal: 40,
-    },
-    modalView: {
-      width: '100%',
-      margin: 20,
-      borderRadius: 20,
-      paddingHorizontal: 35,
-      paddingBottom: 16,
-      paddingTop: 14,
-      alignItems: 'center',
-      shadowColor: '#000',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
-      backgroundColor: colors.card,
-    },
-    textStyle: {
-      color: colors.text,
-      textAlign: 'center',
-    },
     closeBtn: {
       alignSelf: 'flex-start',
     },

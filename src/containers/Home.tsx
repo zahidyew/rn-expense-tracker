@@ -7,12 +7,16 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useAppSelector } from '@redux/reduxHooks';
 import { Expense } from '@models/Expense';
+import { useTheme } from '@react-navigation/native';
+import { createGlobalStyles } from '@styles/globalStyles';
 
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const expensesDataFromStore = useAppSelector((state) => state.expenses);
   const { month, monthNumber, year } = useAppSelector((state) => state.date);
   const [expenses, setExpenses] = useState(expensesDataFromStore);
+  const { colors } = useTheme();
+  const globalStyles = createGlobalStyles(colors);
 
   useEffect(() => {
     setExpenses(
@@ -36,7 +40,7 @@ const Home = () => {
   };
 
   return (
-    <View style={styles.viewContainer}>
+    <View style={globalStyles.viewContainer}>
       <NewExpenseModal isOpen={modalVisible} closeModal={setModalVisible} />
       <View style={styles.boxContainer}>
         <DateBar month={month} year={year} />
@@ -62,9 +66,6 @@ export default Home;
 const styles = StyleSheet.create({
   spacer: {
     marginTop: 10,
-  },
-  viewContainer: {
-    flex: 1,
   },
   boxContainer: {
     flex: 1,
