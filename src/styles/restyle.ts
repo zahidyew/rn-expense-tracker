@@ -21,12 +21,6 @@ const palette = {
 
 const theme = createTheme({
   colors: {
-    /* primary: palette.lightBlue,
-    background: palette.offWhite,
-    card: palette.white,
-    text: palette.black,
-    border: palette.gray,
-    notification: palette.red, */
     background: palette.offWhite,
     foreground: palette.white,
     text: palette.black,
@@ -96,10 +90,6 @@ const theme = createTheme({
       elevation: 2,
       justifyContent: 'center',
     },
-    /* secondary: {
-      backgroundColor: 'secondaryCardBackground',
-      shadowOpacity: 0.1,
-    }, */
   },
 });
 

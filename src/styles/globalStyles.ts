@@ -3,9 +3,6 @@ import { StyleSheet } from 'react-native';
 
 const createGlobalStyles = (colors: Colors) => {
   const globalStyles = StyleSheet.create({
-    viewContainer: {
-      flex: 1,
-    },
     centeredModalContainer: {
       flex: 1,
       justifyContent: 'center',
@@ -37,23 +34,6 @@ const createGlobalStyles = (colors: Colors) => {
       elevation: 2,
       marginTop: 8,
       backgroundColor: colors.primary,
-    },
-    normalText: {
-      color: colors.text,
-    },
-    centeredText: {
-      color: colors.text,
-      textAlign: 'center',
-    },
-    buttonText: {
-      color: 'white',
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-    subtitleText: {
-      fontSize: 12,
-      color: colors.text,
-      opacity: 0.5,
     },
     // Todo: spacing for Android
   });
