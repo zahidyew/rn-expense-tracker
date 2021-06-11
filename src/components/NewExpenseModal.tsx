@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   Modal,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -11,8 +10,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import myStrings from '@locales/english';
 import { showOneBtnAlert } from '@helpers/Alerts';
 import { onlyNumbersAllowed } from '@helpers/Formatters';
-import { useTheme } from '@react-navigation/native';
-import { Colors } from '@colors';
 import { useAppDispatch } from '@redux/reduxHooks';
 import {
   addNewExpense,
@@ -21,7 +18,8 @@ import {
 } from '@redux/slices/expenses';
 import { getDate } from '@helpers/Dates';
 import { Expense } from '@models/Expense';
-import { createGlobalStyles } from '@styles/globalStyles';
+import { createBox, createText, useTheme } from '@shopify/restyle';
+import { Theme } from '@styles/restyle';
 
 interface MyModalProps {
   isOpen: boolean;
@@ -31,14 +29,16 @@ interface MyModalProps {
   isUpdate?: boolean;
 }
 
+const Box = createBox<Theme>();
+const Text = createText<Theme>();
+
 const NewExpenseModal = (props: MyModalProps) => {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
-  const globalStyles = createGlobalStyles(colors);
   const { isOpen, closeModal, expense, isUpdate } = props;
   const [itemName, setItemName] = useState('');
   const [price, setPrice] = useState('');
   const dispatch = useAppDispatch();
+  const theme = useTheme<Theme>();
+  const { primary, text } = theme.colors;
 
   // this make sure itemName & price has the correct value everytime props change
   useEffect(() => {
@@ -106,7 +106,7 @@ const NewExpenseModal = (props: MyModalProps) => {
     if (isUpdate) {
       return (
         // Update btn
-        <Text style={globalStyles.buttonText}>
+        <Text variant="buttonText">
           {myStrings.udpate}{' '}
           <Ionicons name={'create'} size={15} color={'white'} />
         </Text>
@@ -114,7 +114,7 @@ const NewExpenseModal = (props: MyModalProps) => {
     } else {
       return (
         // Submit btn
-        <Text style={globalStyles.buttonText}>
+        <Text variant="buttonText">
           {myStrings.submit}{' '}
           <Ionicons name={'chevron-forward'} size={15} color={'white'} />
         </Text>
@@ -125,15 +125,16 @@ const NewExpenseModal = (props: MyModalProps) => {
   const createDeleteBtn = () => {
     return (
       <TouchableOpacity
-        style={styles.deleteButton}
         onPress={() => {
           dispatch(deleteExpense(expense?.id as number));
           clearAndCloseModal();
         }}>
-        <Text style={globalStyles.buttonText}>
-          {myStrings.delete}{' '}
-          <Ionicons name={'trash'} size={15} color={'white'} />
-        </Text>
+        <Box backgroundColor="primary" style={styles.deleteButton}>
+          <Text variant="buttonText">
+            {myStrings.delete}{' '}
+            <Ionicons name={'trash'} size={15} color={'white'} />
+          </Text>
+        </Box>
       </TouchableOpacity>
     );
   };
@@ -150,8 +151,8 @@ const NewExpenseModal = (props: MyModalProps) => {
         }
         clearAndCloseModal();
       }}>
-      <View style={globalStyles.centeredModalContainer}>
-        <View style={globalStyles.modalViewContainer}>
+      <View style={styles.centeredModalContainer}>
+        <Box backgroundColor="foreground" style={styles.modalViewContainer}>
           <TouchableOpacity
             style={styles.closeBtn}
             onPress={() => {
@@ -161,34 +162,34 @@ const NewExpenseModal = (props: MyModalProps) => {
               }
               clearAndCloseModal();
             }}>
-            <Ionicons name={'close-circle'} size={24} color={colors.primary} />
+            <Ionicons name={'close-circle'} size={24} color={primary} />
           </TouchableOpacity>
-          <Text style={styles.textStyle}>
+          <Text variant="centeredText">
             {isUpdate ? myStrings.updateExpense : myStrings.newExpense}
           </Text>
           <TextInput
-            style={styles.modalText}
+            style={[styles.modalText, { color: text }]}
             placeholder={myStrings.itemName}
             autoCapitalize={'sentences'}
             value={itemName}
             onChangeText={setItemName}
           />
           <TextInput
-            style={styles.modalText}
+            style={[styles.modalText, { color: text }]}
             placeholder={myStrings.price}
             keyboardType={'numeric'}
             value={price}
             onChangeText={(value) => setPrice(onlyNumbersAllowed(value))}
           />
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              style={globalStyles.button}
-              onPress={submitBtnIsPressed}>
-              {createSubmitOrUpdateBtn()}
+          <Box style={styles.buttonsContainer}>
+            <TouchableOpacity onPress={submitBtnIsPressed}>
+              <Box backgroundColor="primary" style={styles.button}>
+                {createSubmitOrUpdateBtn()}
+              </Box>
             </TouchableOpacity>
             {isUpdate && createDeleteBtn()}
-          </View>
-        </View>
+          </Box>
+        </Box>
       </View>
     </Modal>
   );
@@ -196,35 +197,63 @@ const NewExpenseModal = (props: MyModalProps) => {
 
 export default NewExpenseModal;
 
-const createStyles = (colors: Colors) => {
-  const globalStyles = createGlobalStyles(colors);
-  const styles = StyleSheet.create({
-    textStyle: {
-      ...globalStyles.normalText,
-      fontWeight: 'bold',
-      textAlign: 'center',
+const styles = StyleSheet.create({
+  textStyle: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    height: 32,
+    width: '100%',
+    marginVertical: 10,
+    borderWidth: 0.5,
+    borderColor: 'gray',
+    paddingLeft: 8,
+  },
+  closeBtn: {
+    alignSelf: 'flex-start',
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-around',
+  },
+  deleteButton: {
+    backgroundColor: 'red',
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    elevation: 2,
+    marginTop: 8,
+  },
+  centeredModalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 40,
+  },
+  modalViewContainer: {
+    width: '100%',
+    margin: 20,
+    borderRadius: 20,
+    paddingHorizontal: 35,
+    paddingBottom: 16,
+    paddingTop: 14,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    modalText: {
-      ...globalStyles.normalText,
-      height: 32,
-      width: '100%',
-      marginVertical: 10,
-      borderWidth: 0.5,
-      borderColor: 'gray',
-      paddingLeft: 8,
-    },
-    closeBtn: {
-      alignSelf: 'flex-start',
-    },
-    buttonsContainer: {
-      flexDirection: 'row',
-      width: '100%',
-      justifyContent: 'space-around',
-    },
-    deleteButton: {
-      ...globalStyles.button,
-      backgroundColor: 'red',
-    },
-  });
-  return styles;
-};
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 10,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    elevation: 2,
+    marginTop: 8,
+  },
+});

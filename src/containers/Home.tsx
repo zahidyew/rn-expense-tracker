@@ -7,16 +7,17 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useAppSelector } from '@redux/reduxHooks';
 import { Expense } from '@models/Expense';
-import { useTheme } from '@react-navigation/native';
-import { createGlobalStyles } from '@styles/globalStyles';
+import { createBox, createText } from '@shopify/restyle';
+import { Theme } from '@styles/restyle';
+
+const Box = createBox<Theme>();
+const Text = createText<Theme>();
 
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const expensesDataFromStore = useAppSelector((state) => state.expenses);
   const { month, monthNumber, year } = useAppSelector((state) => state.date);
   const [expenses, setExpenses] = useState(expensesDataFromStore);
-  const { colors } = useTheme();
-  const globalStyles = createGlobalStyles(colors);
 
   useEffect(() => {
     setExpenses(
@@ -40,7 +41,7 @@ const Home = () => {
   };
 
   return (
-    <View style={globalStyles.viewContainer}>
+    <Box backgroundColor="background" flex={1}>
       <NewExpenseModal isOpen={modalVisible} closeModal={setModalVisible} />
       <View style={styles.boxContainer}>
         <DateBar month={month} year={year} />
@@ -57,7 +58,7 @@ const Home = () => {
       <View style={styles.floatingBtnContainer}>
         <FloatingButton onClick={() => setModalVisible(true)} />
       </View>
-    </View>
+    </Box>
   );
 };
 

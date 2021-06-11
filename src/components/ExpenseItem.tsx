@@ -1,30 +1,30 @@
-import { Colors } from '@colors';
 import { Expense } from '@models/Expense';
-import { useTheme } from '@react-navigation/native';
-import { createGlobalStyles } from '@styles/globalStyles';
+import { createBox, createText } from '@shopify/restyle';
+import { Theme } from '@styles/restyle';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import Card from './Card';
 import NewExpenseModal from './NewExpenseModal';
 
+const Box = createBox<Theme>();
+const Text = createText<Theme>();
+
 const ExpenseItem = (props: Expense) => {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
-  const globalStyles = createGlobalStyles(colors);
   const { id, name, price, date } = props;
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.box}
-        onPress={() => setModalVisible(true)}>
-        <View style={styles.mainRow}>
-          <Text style={globalStyles.normalText}>{name}</Text>
-          <Text style={globalStyles.normalText}>{price}</Text>
-        </View>
-        <View style={styles.subtitleRow}>
-          <Text style={globalStyles.subtitleText}>{date}</Text>
-        </View>
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <Card variant="expensesCard">
+          <View style={styles.mainRow}>
+            <Text variant="body">{name}</Text>
+            <Text variant="body">{price}</Text>
+          </View>
+          <View style={styles.subtitleRow}>
+            <Text variant="subtitle">{date}</Text>
+          </View>
+        </Card>
       </TouchableOpacity>
       <NewExpenseModal
         isOpen={modalVisible}
@@ -38,31 +38,19 @@ const ExpenseItem = (props: Expense) => {
 
 export default ExpenseItem;
 
-const createStyles = (colors: Colors) => {
-  const styles = StyleSheet.create({
-    container: {
-      marginTop: 8,
-      alignItems: 'center',
-    },
-    box: {
-      width: 325,
-      height: 70,
-      shadowOpacity: 0.15,
-      shadowOffset: { width: 1, height: 2 },
-      elevation: 2,
-      justifyContent: 'center',
-      backgroundColor: colors.card,
-    },
-    mainRow: {
-      paddingTop: 8,
-      paddingHorizontal: 16,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-    },
-    subtitleRow: {
-      paddingHorizontal: 16,
-    },
-  });
-  return styles;
-};
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 8,
+    alignItems: 'center',
+  },
+  mainRow: {
+    paddingTop: 8,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  subtitleRow: {
+    paddingHorizontal: 16,
+  },
+});

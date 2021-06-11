@@ -1,42 +1,42 @@
-import {Colors} from '@colors';
-import {useTheme} from '@react-navigation/native';
+import { createBox } from '@shopify/restyle';
+import { Theme } from '@styles/restyle';
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface props {
   onClick: () => void;
 }
 
+const Box = createBox<Theme>();
+
 const FloatingButton = (props: props) => {
-  const {colors} = useTheme();
-  const styles = createStyles(colors);
-  const {onClick} = props;
+  const { onClick } = props;
 
   return (
-    <TouchableOpacity style={styles.floatingBtn} onPress={onClick}>
-      <Ionicons name={'add'} size={25} color={colors.text} />
+    <TouchableOpacity onPress={onClick}>
+      <Box
+        backgroundColor="primary"
+        borderColor="primary"
+        style={styles.floatingBtn}>
+        <Ionicons name={'add'} size={25} color={'white'} />
+      </Box>
     </TouchableOpacity>
   );
 };
 
 export default FloatingButton;
 
-const createStyles = (colors: Colors) => {
-  const styles = StyleSheet.create({
-    floatingBtn: {
-      height: 40,
-      width: 40,
-      borderRadius: 100,
-      borderWidth: 2,
-      borderColor: colors.primary,
-      backgroundColor: colors.primary,
-      alignItems: 'center',
-      justifyContent: 'center',
-      shadowOpacity: 0.5,
-      shadowOffset: {width: 1, height: 5},
-      elevation: 2,
-    },
-  });
-  return styles;
-};
+const styles = StyleSheet.create({
+  floatingBtn: {
+    height: 40,
+    width: 40,
+    borderRadius: 100,
+    borderWidth: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowOpacity: 0.5,
+    shadowOffset: { width: 1, height: 5 },
+    elevation: 2,
+  },
+});
