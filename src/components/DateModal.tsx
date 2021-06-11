@@ -5,6 +5,7 @@ import { Theme } from '@styles/restyle';
 import React from 'react';
 import { Modal, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Card from './Card';
 
 interface DateModalProps {
   isOpen: boolean;
@@ -74,8 +75,8 @@ const DateModal = (props: DateModalProps) => {
       transparent={true}
       visible={isOpen}
       onRequestClose={() => {}}>
-      <View style={styles.centeredModalContainer}>
-        <Box backgroundColor="foreground" style={styles.modalViewContainer}>
+      <Card variant="centeredModalContainer">
+        <Card variant="modal">
           <TouchableOpacity
             style={styles.closeBtn}
             onPress={() => {
@@ -112,8 +113,8 @@ const DateModal = (props: DateModalProps) => {
               })}
             </View>
           </View>
-        </Box>
-      </View>
+        </Card>
+      </Card>
     </Modal>
   );
 };
@@ -141,28 +142,5 @@ const styles = StyleSheet.create({
   yearContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-  },
-  centeredModalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 40,
-  },
-  modalViewContainer: {
-    width: '100%',
-    margin: 20,
-    borderRadius: 20,
-    paddingHorizontal: 35,
-    paddingBottom: 16,
-    paddingTop: 14,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
 });

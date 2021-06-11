@@ -20,6 +20,8 @@ import { getDate } from '@helpers/Dates';
 import { Expense } from '@models/Expense';
 import { createBox, createText, useTheme } from '@shopify/restyle';
 import { Theme } from '@styles/restyle';
+import Card from './Card';
+import Button from './Button';
 
 interface MyModalProps {
   isOpen: boolean;
@@ -129,12 +131,12 @@ const NewExpenseModal = (props: MyModalProps) => {
           dispatch(deleteExpense(expense?.id as number));
           clearAndCloseModal();
         }}>
-        <Box backgroundColor="primary" style={styles.deleteButton}>
+        <Button variant="button" backgroundColor="error">
           <Text variant="buttonText">
             {myStrings.delete}{' '}
             <Ionicons name={'trash'} size={15} color={'white'} />
           </Text>
-        </Box>
+        </Button>
       </TouchableOpacity>
     );
   };
@@ -151,8 +153,8 @@ const NewExpenseModal = (props: MyModalProps) => {
         }
         clearAndCloseModal();
       }}>
-      <View style={styles.centeredModalContainer}>
-        <Box backgroundColor="foreground" style={styles.modalViewContainer}>
+      <Card variant="centeredModalContainer">
+        <Card variant="modal">
           <TouchableOpacity
             style={styles.closeBtn}
             onPress={() => {
@@ -183,14 +185,14 @@ const NewExpenseModal = (props: MyModalProps) => {
           />
           <Box style={styles.buttonsContainer}>
             <TouchableOpacity onPress={submitBtnIsPressed}>
-              <Box backgroundColor="primary" style={styles.button}>
+              <Button variant="button" backgroundColor="primary">
                 {createSubmitOrUpdateBtn()}
-              </Box>
+              </Button>
             </TouchableOpacity>
             {isUpdate && createDeleteBtn()}
           </Box>
-        </Box>
-      </View>
+        </Card>
+      </Card>
     </Modal>
   );
 };
@@ -198,10 +200,6 @@ const NewExpenseModal = (props: MyModalProps) => {
 export default NewExpenseModal;
 
 const styles = StyleSheet.create({
-  textStyle: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
   modalText: {
     height: 32,
     width: '100%',
@@ -217,43 +215,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-around',
-  },
-  deleteButton: {
-    backgroundColor: 'red',
-    borderRadius: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    elevation: 2,
-    marginTop: 8,
-  },
-  centeredModalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginHorizontal: 40,
-  },
-  modalViewContainer: {
-    width: '100%',
-    margin: 20,
-    borderRadius: 20,
-    paddingHorizontal: 35,
-    paddingBottom: 16,
-    paddingTop: 14,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 10,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    elevation: 2,
-    marginTop: 8,
   },
 });
