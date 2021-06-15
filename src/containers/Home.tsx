@@ -9,6 +9,7 @@ import { useAppSelector } from '@redux/reduxHooks';
 import { Expense } from '@models/Expense';
 import { createBox, createText } from '@shopify/restyle';
 import { Theme } from '@styles/restyle';
+import { filterExpenses } from '@helpers/Filters';
 
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
@@ -20,13 +21,7 @@ const Home = () => {
   const [expenses, setExpenses] = useState(expensesDataFromStore);
 
   useEffect(() => {
-    setExpenses(
-      expensesDataFromStore.filter(
-        (item) =>
-          item.date.split('/')[1] == monthNumber &&
-          item.date.split('/')[2] == year,
-      ),
-    );
+    setExpenses(filterExpenses(expensesDataFromStore, monthNumber, year));
   }, [monthNumber, year, expensesDataFromStore]);
 
   const renderItem = (item: Expense) => {
