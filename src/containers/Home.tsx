@@ -7,12 +7,11 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useAppSelector } from '@redux/reduxHooks';
 import { Expense } from '@models/Expense';
-import { createBox, createText } from '@shopify/restyle';
+import { createBox } from '@shopify/restyle';
 import { Theme } from '@styles/restyle';
 import { filterExpenses } from '@helpers/Filters';
 
 const Box = createBox<Theme>();
-const Text = createText<Theme>();
 
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -38,18 +37,21 @@ const Home = () => {
   return (
     <Box backgroundColor="background" flex={1}>
       <NewExpenseModal isOpen={modalVisible} closeModal={setModalVisible} />
-      <View style={styles.boxContainer}>
-        <DateBar month={month} year={year} />
-        <View style={styles.spacer}></View>
-        <ExpensesBox data={expenses} />
-        <View style={styles.itemContainer}>
+      <Box flex={1} marginTop={'s'}>
+        <Box minHeight={30}>
+          <DateBar month={month} year={year} />
+        </Box>
+        <Box minHeight={70} marginTop={'s'}>
+          <ExpensesBox data={expenses} />
+        </Box>
+        <Box flex={1} marginTop={'xs'}>
           <FlatList
             data={expenses}
             renderItem={({ item }) => renderItem(item)}
             keyExtractor={(_item, index) => index.toString()}
           />
-        </View>
-      </View>
+        </Box>
+      </Box>
       <View style={styles.floatingBtnContainer}>
         <FloatingButton onClick={() => setModalVisible(true)} />
       </View>
@@ -60,17 +62,6 @@ const Home = () => {
 export default Home;
 
 const styles = StyleSheet.create({
-  spacer: {
-    marginTop: 10,
-  },
-  boxContainer: {
-    flex: 1,
-    paddingTop: 10,
-  },
-  itemContainer: {
-    flex: 1,
-    marginTop: 10,
-  },
   floatingBtnContainer: {
     position: 'absolute',
     bottom: 0,

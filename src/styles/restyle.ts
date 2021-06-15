@@ -73,25 +73,13 @@ const theme = createTheme({
     },
   },
   cardVariants: {
-    centeredTextCard: {
-      backgroundColor: 'foreground',
-      width: 325,
-      height: 70,
-      alignItems: 'center',
-      justifyContent: 'center',
-      shadowOpacity: 0.15,
-      shadowOffset: { width: 1, height: 2 },
-      elevation: 2,
-      //shadowOpacity: 0.3,
-    },
     expensesCard: {
-      backgroundColor: 'foreground',
-      width: 325,
       height: 70,
+      backgroundColor: 'foreground',
+      justifyContent: 'center',
       shadowOpacity: 0.15,
       shadowOffset: { width: 1, height: 2 },
       elevation: 2,
-      justifyContent: 'center',
     },
     centeredModalContainer: {
       flex: 1,

@@ -40,8 +40,9 @@ export default ExpenseItem;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     marginTop: 8,
-    alignItems: 'center',
+    marginHorizontal: 20,
   },
   mainRow: {
     paddingTop: 8,

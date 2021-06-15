@@ -17,7 +17,7 @@ const DateBar = (props: DateBarProps) => {
   const { month, year } = props;
 
   return (
-    <View style={styles.container}>
+    <Box flex={1} paddingHorizontal={'ml'}>
       <Box backgroundColor="foreground" style={styles.box}>
         <TouchableOpacity onPress={() => setIsOpen(true)}>
           <Text variant="body">{`${month.substr(0, 3)}, ${year}`}</Text>
@@ -29,18 +29,14 @@ const DateBar = (props: DateBarProps) => {
         year={year}
         closeModal={setIsOpen}
       />
-    </View>
+    </Box>
   );
 };
 
 export default DateBar;
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
   box: {
-    width: 325,
     height: 30,
     flexDirection: 'row-reverse',
     alignItems: 'center',
