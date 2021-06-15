@@ -1,4 +1,4 @@
-import { filterExpenses } from '../src/helpers/Filters';
+import { filterExpenses } from '../../src/helpers/Filters';
 
 test('filtering expenses', () => {
   const expense = [
