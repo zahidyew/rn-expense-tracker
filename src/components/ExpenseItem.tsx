@@ -22,7 +22,7 @@ const ExpenseItem = (props: Expense) => {
             <Text variant="body">{price}</Text>
           </View>
           <View style={styles.subtitleRow}>
-            <Text variant="subtitle">{date}</Text>
+            <Text variant="subtitle">{date.substr(0, 6)}</Text>
           </View>
         </Card>
       </TouchableOpacity>
