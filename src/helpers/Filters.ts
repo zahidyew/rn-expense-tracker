@@ -7,7 +7,7 @@ export const filterExpenses = (
 ) => {
   return expenses.filter(
     (expense) =>
-      expense.date.split('/')[1] == monthNumber &&
-      expense.date.split('/')[2] == year,
+      expense.date.split(' ')[1] == monthNumber &&
+      expense.date.split(' ')[2] == year,
   );
 };

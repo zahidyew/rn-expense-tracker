@@ -1,38 +1,37 @@
 type DateFormat =
-  | 'weekday'
+  | 'dayName'
   | 'day'
   | 'month'
-  | 'monthInText'
   | 'year'
   | 'dayMonth'
   | 'monthYear'
   | 'dayMonthYear';
 
+// month is returned in the form of the first three letters of the month name
 export const getDate = (format: DateFormat) => {
-  const [month, day, year] = new Date().toLocaleDateString('en-US').split('/');
-  //const [hour, minute] = new Date().toLocaleTimeString('en-US').split(/:| /);
+  // expected output of toDateString(): Wed Jul 28 1993
+  const [dayName, month, day, year] = new Date().toDateString().split(' ');
+  //console.log(`${dayName}, ${day}, ${month}, ${year}`);
 
   switch (format) {
-    case 'weekday':
-      return new Date().toLocaleDateString('en-US', { weekday: 'short' });
+    case 'dayName':
+      return dayName;
     case 'day':
       return day;
     case 'month':
       return month;
     case 'year':
       return year;
-    case 'monthInText':
-      return new Date().toLocaleDateString('en-US', { month: 'long' });
     case 'dayMonth':
-      return `${day}/${month}`;
+      return `${day} ${month}`;
     case 'monthYear':
-      return `${month}/${year}`;
+      return `${month} ${year}`;
     case 'dayMonthYear':
-      return `${day}/${month}/${year}`;
+      return `${day} ${month} ${year}`;
     default:
       console.error(
         'Incorrect date format passed in function getDate() in Dates.ts',
       );
-      return `${day}/${month}/${year}`;
+      return `${day} ${month} ${year}`;
   }
 };

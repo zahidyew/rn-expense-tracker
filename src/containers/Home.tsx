@@ -16,12 +16,12 @@ const Box = createBox<Theme>();
 const Home = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const expensesDataFromStore = useAppSelector((state) => state.expenses);
-  const { month, monthNumber, year } = useAppSelector((state) => state.date);
+  const { month, year } = useAppSelector((state) => state.date);
   const [expenses, setExpenses] = useState(expensesDataFromStore);
 
   useEffect(() => {
-    setExpenses(filterExpenses(expensesDataFromStore, monthNumber, year));
-  }, [monthNumber, year, expensesDataFromStore]);
+    setExpenses(filterExpenses(expensesDataFromStore, month, year));
+  }, [month, year, expensesDataFromStore]);
 
   const renderItem = (item: Expense) => {
     return (
@@ -48,7 +48,7 @@ const Home = () => {
             keyboardShouldPersistTaps={'handled'}
             data={expenses}
             renderItem={({ item }) => renderItem(item)}
-            keyExtractor={(_item, index) => index.toString()}
+            keyExtractor={(item) => item.id.toString()}
           />
         </Box>
       </Box>

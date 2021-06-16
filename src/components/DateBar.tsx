@@ -20,12 +20,12 @@ const DateBar = (props: DateBarProps) => {
     <Box flex={1} paddingHorizontal={'ml'}>
       <Box backgroundColor="foreground" style={styles.box}>
         <TouchableOpacity onPress={() => setIsOpen(true)}>
-          <Text variant="body">{`${month.substr(0, 3)}, ${year}`}</Text>
+          <Text variant="body">{`${month} ${year}`}</Text>
         </TouchableOpacity>
       </Box>
       <DateModal
         isOpen={isOpen}
-        month={month.substr(0, 3)}
+        month={month}
         year={year}
         closeModal={setIsOpen}
       />

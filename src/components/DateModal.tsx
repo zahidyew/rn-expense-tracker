@@ -43,13 +43,10 @@ const DateModal = (props: DateModalProps) => {
 
     return (
       <TouchableOpacity
-        key={index}
+        key={month}
         style={styles.monthContainer}
         onPress={() => {
-          const monthNumber = index + 1;
-          dispatch(
-            updateMonth({ month: month, monthNumber: monthNumber.toString() }),
-          );
+          dispatch(updateMonth(month));
           closeModal(!isOpen);
         }}>
         {isMostRightColumn ? (
