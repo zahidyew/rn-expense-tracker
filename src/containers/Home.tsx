@@ -36,7 +36,6 @@ const Home = () => {
 
   return (
     <Box backgroundColor="background" flex={1}>
-      <NewExpenseModal isOpen={modalVisible} closeModal={setModalVisible} />
       <Box flex={1} marginTop={'s'}>
         <Box minHeight={30}>
           <DateBar month={month} year={year} />
@@ -46,6 +45,7 @@ const Home = () => {
         </Box>
         <Box flex={1} marginTop={'xs'}>
           <FlatList
+            keyboardShouldPersistTaps={'handled'}
             data={expenses}
             renderItem={({ item }) => renderItem(item)}
             keyExtractor={(_item, index) => index.toString()}
@@ -55,6 +55,7 @@ const Home = () => {
       <View style={styles.floatingBtnContainer}>
         <FloatingButton onClick={() => setModalVisible(true)} />
       </View>
+      <NewExpenseModal isOpen={modalVisible} closeModal={setModalVisible} />
     </Box>
   );
 };

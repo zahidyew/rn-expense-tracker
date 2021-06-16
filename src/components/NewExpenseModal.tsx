@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
+  KeyboardAvoidingView,
   Modal,
+  Platform,
   StyleSheet,
   TextInput,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import myStrings from '@locales/english';
@@ -153,7 +154,9 @@ const NewExpenseModal = (props: MyModalProps) => {
         }
         clearAndCloseModal();
       }}>
-      <Card variant="centeredModalContainer">
+      <KeyboardAvoidingView
+        style={styles.centeredModalContainer}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <Card variant="modal">
           <TouchableOpacity
             style={styles.closeBtn}
@@ -192,7 +195,7 @@ const NewExpenseModal = (props: MyModalProps) => {
             {isUpdate && createDeleteBtn()}
           </Box>
         </Card>
-      </Card>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };
@@ -200,6 +203,12 @@ const NewExpenseModal = (props: MyModalProps) => {
 export default NewExpenseModal;
 
 const styles = StyleSheet.create({
+  centeredModalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 40,
+  },
   modalText: {
     height: 32,
     width: '100%',
@@ -207,6 +216,11 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: 'gray',
     paddingLeft: 8,
+    ...Platform.select({
+      android: {
+        paddingVertical: 0,
+      },
+    }),
   },
   closeBtn: {
     alignSelf: 'flex-start',
