@@ -81,12 +81,6 @@ const theme = createTheme({
       shadowOffset: { width: 1, height: 2 },
       elevation: 2,
     },
-    centeredModalContainer: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginHorizontal: 'xxl',
-    },
     modal: {
       width: '100%',
       margin: 'm',

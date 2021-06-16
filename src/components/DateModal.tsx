@@ -75,7 +75,7 @@ const DateModal = (props: DateModalProps) => {
       transparent={true}
       visible={isOpen}
       onRequestClose={() => {}}>
-      <Card variant="centeredModalContainer">
+      <View style={styles.centeredModalContainer}>
         <Card variant="modal">
           <TouchableOpacity
             style={styles.closeBtn}
@@ -114,7 +114,7 @@ const DateModal = (props: DateModalProps) => {
             </View>
           </View>
         </Card>
-      </Card>
+      </View>
     </Modal>
   );
 };
@@ -122,6 +122,12 @@ const DateModal = (props: DateModalProps) => {
 export default DateModal;
 
 const styles = StyleSheet.create({
+  centeredModalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 40,
+  },
   closeBtn: {
     alignSelf: 'flex-start',
   },
