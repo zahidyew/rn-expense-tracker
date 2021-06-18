@@ -16,7 +16,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Home from '@containers/Home';
 import Charts from '@containers/Charts';
-import myStrings from '@locales/english';
 import { store, persistor } from '@redux/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -24,9 +23,24 @@ import { ThemeProvider, useTheme } from '@shopify/restyle';
 import { theme, darkTheme, Theme } from '@styles/restyle';
 import ExpenseScreen from './containers/ExpenseScreen';
 
-const HomeStack = createStackNavigator();
-const ChartStack = createStackNavigator();
-const BottomTab = createBottomTabNavigator();
+type BottomStackParamList = {
+  Home: undefined;
+  Charts: undefined;
+  //Profile: { userId: string };
+};
+
+export type HomeStackParamList = {
+  Home: undefined;
+  ExpenseScreen: undefined;
+};
+
+export type ChartStackParamList = {
+  Charts: undefined;
+};
+
+const HomeStack = createStackNavigator<HomeStackParamList>();
+const ChartStack = createStackNavigator<ChartStackParamList>();
+const BottomTab = createBottomTabNavigator<BottomStackParamList>();
 
 const createHomeStacks = () => {
   const theme = useTheme<Theme>();

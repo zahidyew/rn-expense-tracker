@@ -1,23 +1,26 @@
 import { createBox } from '@shopify/restyle';
+import { HomeScreenNavigationProp } from '@src/containers/Home';
 import { Theme } from '@styles/restyle';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-// Todo: type check this later
-interface props {
+/* interface props {
   navigation: any;
   onClick: () => void;
-}
+} */
+
+type Props = {
+  navigation: HomeScreenNavigationProp;
+};
 
 const Box = createBox<Theme>();
 
-const FloatingButton = (props: props) => {
-  const { onClick } = props;
+const FloatingButton = (props: Props) => {
+  const { navigation } = props;
 
   return (
-    <TouchableOpacity
-      onPress={() => props.navigation.navigate('ExpenseScreen')}>
+    <TouchableOpacity onPress={() => navigation.navigate('ExpenseScreen')}>
       <Box
         backgroundColor="primary"
         borderColor="primary"

@@ -1,11 +1,21 @@
 import React from 'react';
 import { createBox, createText } from '@shopify/restyle';
 import { Theme } from '@styles/restyle';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { HomeStackParamList } from '@src/App';
+
+export type ExpenseScreenNavigationProp = StackNavigationProp<
+  HomeStackParamList,
+  'ExpenseScreen'
+>;
+type Props = {
+  navigation: ExpenseScreenNavigationProp;
+};
 
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
 
-const ExpenseScreen = ({ navigation }: any) => {
+const ExpenseScreen = ({ navigation }: Props) => {
   /* React.useLayoutEffect(() => {
      navigation.setOptions({
        headerRight: () => (
