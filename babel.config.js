@@ -6,6 +6,7 @@ module.exports = {
       {
         root: ['./'],
         alias: {
+          '@src': './build',
           '@locales': './build/locales',
           '@redux': './build/redux',
           '@models': './build/models',

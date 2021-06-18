@@ -1,5 +1,5 @@
-import { getDate } from '@helpers/Dates';
 import { Date } from '@models/Date';
+import { getDate } from '@src/helpers/Dates';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialDate: Date = {
