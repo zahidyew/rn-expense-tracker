@@ -4,7 +4,9 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+// Todo: type check this later
 interface props {
+  navigation: any;
   onClick: () => void;
 }
 
@@ -14,7 +16,8 @@ const FloatingButton = (props: props) => {
   const { onClick } = props;
 
   return (
-    <TouchableOpacity onPress={onClick}>
+    <TouchableOpacity
+      onPress={() => props.navigation.navigate('ExpenseScreen')}>
       <Box
         backgroundColor="primary"
         borderColor="primary"

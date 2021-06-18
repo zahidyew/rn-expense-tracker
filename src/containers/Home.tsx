@@ -13,7 +13,8 @@ import { filterExpenses } from '@helpers/Filters';
 
 const Box = createBox<Theme>();
 
-const Home = () => {
+// Todo: type check this properly with TS later
+const Home = ({ navigation }: any) => {
   const [modalVisible, setModalVisible] = useState(false);
   const expensesDataFromStore = useAppSelector((state) => state.expenses);
   const { month, year } = useAppSelector((state) => state.date);
@@ -53,7 +54,13 @@ const Home = () => {
         </Box>
       </Box>
       <View style={styles.floatingBtnContainer}>
-        <FloatingButton onClick={() => setModalVisible(true)} />
+        <FloatingButton
+          navigation={navigation}
+          onClick={
+            () => {}
+            //setModalVisible(true)
+          }
+        />
       </View>
       <NewExpenseModal isOpen={modalVisible} closeModal={setModalVisible} />
     </Box>

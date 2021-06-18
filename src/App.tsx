@@ -6,7 +6,11 @@ import {
   StyleSheet,
   useColorScheme,
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import {
+  getFocusedRouteNameFromRoute,
+  NavigationContainer,
+  RouteProp,
+} from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -18,29 +22,77 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider, useTheme } from '@shopify/restyle';
 import { theme, darkTheme, Theme } from '@styles/restyle';
+import ExpenseScreen from './containers/ExpenseScreen';
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+const HomeStack = createStackNavigator();
+const ChartStack = createStackNavigator();
+const BottomTab = createBottomTabNavigator();
 
-const MainTabs = () => {
+const createHomeStacks = () => {
   const theme = useTheme<Theme>();
-  const { foreground, border } = theme.colors;
+  const { foreground, border, text, primary } = theme.colors;
+  const stackScreenOptions = {
+    headerStyle: {
+      backgroundColor: foreground,
+      shadowColor: border,
+    },
+    headerTitleStyle: {
+      color: text,
+    },
+    headerTintColor: primary,
+    //headerBackTitleVisible: false,
+    //animationEnabled: false,
+  };
+
+  return (
+    <HomeStack.Navigator screenOptions={stackScreenOptions}>
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="ExpenseScreen" component={ExpenseScreen} />
+    </HomeStack.Navigator>
+  );
+};
+
+const createChartStacks = () => {
+  const theme = useTheme<Theme>();
+  const { foreground, border, text, primary } = theme.colors;
+  const stackScreenOptions = {
+    headerStyle: {
+      backgroundColor: foreground,
+      shadowColor: border,
+    },
+    headerTitleStyle: {
+      color: text,
+    },
+    headerTintColor: primary,
+    //headerBackTitle: '',
+    //animationEnabled: false,
+  };
+
+  return (
+    <ChartStack.Navigator screenOptions={stackScreenOptions}>
+      <ChartStack.Screen name="Charts" component={Charts} />
+    </ChartStack.Navigator>
+  );
+};
+
+const App = () => {
+  const scheme = useColorScheme();
+  const userTheme = scheme === 'dark' ? darkTheme : theme;
   const tabBarOptions = {
     keyboardHidesTabBar: true,
     style: {
-      backgroundColor: foreground,
-      borderTopColor: border,
+      backgroundColor: userTheme.colors.foreground,
+      borderTopColor: userTheme.colors.border,
     },
   };
 
   const getIcon = (routeName: string, focused: boolean) => {
-    if (routeName === myStrings.home) {
+    if (routeName === 'Home') {
       return focused ? 'home' : 'home-outline';
-    } else if (routeName === myStrings.charts) {
+    } else if (routeName === 'Charts') {
       return focused ? 'bar-chart' : 'bar-chart-outline';
-    } else {
-      return 'help-circle';
     }
+    return 'help-circle';
   };
 
   const displayTabBarIcon = (
@@ -54,32 +106,15 @@ const MainTabs = () => {
     );
   };
 
-  return (
-    <Tab.Navigator
-      tabBarOptions={tabBarOptions}
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          return displayTabBarIcon(route.name, focused, color, size);
-        },
-      })}>
-      <Tab.Screen name={myStrings.home} component={Home} />
-      <Tab.Screen name={myStrings.charts} component={Charts} />
-    </Tab.Navigator>
-  );
-};
+  const shouldBottomTabBeVisible = (
+    route: RouteProp<Record<string, object | undefined>, string>,
+  ) => {
+    const routeName = getFocusedRouteNameFromRoute(route) ?? '';
 
-const App = () => {
-  const scheme = useColorScheme();
-  const userTheme = scheme === 'dark' ? darkTheme : theme;
-  const stackScreenOptions = {
-    title: myStrings.expenseTracker,
-    headerStyle: {
-      backgroundColor: userTheme.colors.foreground,
-      shadowColor: userTheme.colors.border,
-    },
-    headerTitleStyle: {
-      color: userTheme.colors.text,
-    },
+    if (routeName === 'Home' || routeName == '') {
+      return true;
+    }
+    return false;
   };
 
   return (
@@ -89,13 +124,22 @@ const App = () => {
           <SafeAreaView style={styles.viewContainer}>
             <StatusBar barStyle={'default'} />
             <NavigationContainer>
-              <Stack.Navigator>
-                <Stack.Screen
-                  name="MainPage"
-                  component={MainTabs}
-                  options={stackScreenOptions}
+              <BottomTab.Navigator
+                tabBarOptions={tabBarOptions}
+                screenOptions={({ route }) => ({
+                  tabBarIcon: ({ focused, color, size }) => {
+                    return displayTabBarIcon(route.name, focused, color, size);
+                  },
+                })}>
+                <BottomTab.Screen
+                  name="Home"
+                  component={createHomeStacks}
+                  options={({ route }) => ({
+                    tabBarVisible: shouldBottomTabBeVisible(route),
+                  })}
                 />
-              </Stack.Navigator>
+                <BottomTab.Screen name="Charts" component={createChartStacks} />
+              </BottomTab.Navigator>
             </NavigationContainer>
           </SafeAreaView>
         </ThemeProvider>
