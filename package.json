@@ -7,11 +7,12 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "test:watch": "npm run test --watch",
-    "test:ci": "npm run test --coverage",
-    "test:badges": "npm run test:ci  && jest-coverage-badges --input coverage/coverage-summary.json --output __badges__",
+    "test-w": "yarn run test --watchAll --verbose",
+    "test-c": "yarn run test --coverage",
+    "test-b": "yarn run test-ci  && jest-coverage-badges --input coverage/coverage-summary.json --output __badges__",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
-    "build": "rm -rf ./build/ && tsc"
+    "build": "rm -rf ./build/ && tsc",
+    "reset": "watchman watch-del-all && rm -rf $TMPDIR/react-* && rm -rf node_modules/ && yarn install && yarn start -- --reset-cache"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.4",
@@ -56,16 +57,5 @@
   },
   "resolutions": {
     "@types/react": "^17"
-  },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ]
   }
 }

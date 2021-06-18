@@ -87,6 +87,7 @@ const NewExpenseModal = (props: MyModalProps) => {
           name: itemName,
           price: parseFloat(price),
           date: getDate('dayMonthYear'),
+          //date: '01 Jun 2020',
         }),
       );
     }
