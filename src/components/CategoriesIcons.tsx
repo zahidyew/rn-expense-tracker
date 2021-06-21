@@ -1,4 +1,7 @@
 import { createBox, createText, useTheme } from '@shopify/restyle';
+import { getDate } from '@src/helpers/Dates';
+import { useAppDispatch } from '@src/redux/reduxHooks';
+import { addNewExpense } from '@src/redux/slices/expenses';
 import { Theme } from '@src/styles/restyle';
 import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
@@ -18,6 +21,7 @@ const CategoriesIcons = () => {
   const { text, border, success } = theme.colors;
   const rowsOfIcons: JSX.Element[] = [];
   const [selectedId, setSelectedId] = useState(0);
+  const dispatch = useAppDispatch();
 
   const categories: Category[] = [
     {
@@ -61,6 +65,10 @@ const CategoriesIcons = () => {
       icon: 'car-sport-outline',
     }, */
   ];
+
+  const generateId = () => {
+    return new Date().valueOf();
+  };
 
   const getNumberOfRows = (categoriesLength: number) => {
     const rows = Math.ceil(categoriesLength / 4);
@@ -107,7 +115,18 @@ const CategoriesIcons = () => {
           return (
             <Box key={item.id} flex={1} alignItems="center">
               <TouchableOpacity
-                onPress={() => setSelectedId(item.id)}
+                onPress={() => {
+                  setSelectedId(item.id);
+                  /* dispatch(
+                    addNewExpense({
+                      id: generateId(),
+                      name: item.name,
+                      price: parseFloat('5'),
+                      date: getDate('dayMonthYear'),
+                      //date: '01 Jun 2020',
+                    }),
+                  ); */
+                }}
                 style={
                   selectedId === item.id
                     ? [styles.roundContainer, { backgroundColor: success }]
