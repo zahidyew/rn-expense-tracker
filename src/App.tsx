@@ -22,6 +22,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider, useTheme } from '@shopify/restyle';
 import { theme, darkTheme, Theme } from '@styles/restyle';
 import ExpenseScreen from './containers/ExpenseScreen';
+import { Expense } from './models/Expense';
 
 type BottomStackParamList = {
   Home: undefined;
@@ -31,7 +32,7 @@ type BottomStackParamList = {
 
 export type HomeStackParamList = {
   Home: undefined;
-  ExpenseScreen: { isEditing: boolean };
+  ExpenseScreen: { isEditing: boolean; expense?: Expense };
 };
 
 export type ChartStackParamList = {

@@ -24,7 +24,10 @@ const ExpenseItem = (props: Props) => {
       {/* <TouchableOpacity onPress={() => setModalVisible(true)}> */}
       <TouchableOpacity
         onPress={() =>
-          props.navigation.navigate('ExpenseScreen', { isEditing: true })
+          props.navigation.navigate('ExpenseScreen', {
+            isEditing: true,
+            expense: props.expense,
+          })
         }>
         <Card variant="expensesCard">
           <View style={styles.mainRow}>
