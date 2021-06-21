@@ -30,6 +30,11 @@ const ExpenseScreen = ({ navigation }: Props) => {
   const rowsOfIcons: JSX.Element[] = [];
   const [selectedId, setSelectedId] = useState(0);
 
+  useEffect(() => {
+    // Todo: it will either be 'New Expense' or 'Update Expense'
+    navigation.setOptions({ title: 'New Expense' });
+  }, []);
+
   const categories: Category[] = [
     {
       id: 1,
