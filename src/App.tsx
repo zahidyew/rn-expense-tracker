@@ -31,7 +31,7 @@ type BottomStackParamList = {
 
 export type HomeStackParamList = {
   Home: undefined;
-  ExpenseScreen: undefined;
+  ExpenseScreen: { isEditing: boolean };
 };
 
 export type ChartStackParamList = {

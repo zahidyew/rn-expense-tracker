@@ -5,14 +5,21 @@ import { Theme } from '@styles/restyle';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { HomeStackParamList } from '@src/App';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { RouteProp } from '@react-navigation/native';
 
 export type ExpenseScreenNavigationProp = StackNavigationProp<
   HomeStackParamList,
   'ExpenseScreen'
 >;
 
+export type ExpenseScreenRouteProp = RouteProp<
+  HomeStackParamList,
+  'ExpenseScreen'
+>;
+
 type Props = {
   navigation: ExpenseScreenNavigationProp;
+  route: ExpenseScreenRouteProp;
 };
 
 export interface Category {
@@ -24,15 +31,18 @@ export interface Category {
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
 
-const ExpenseScreen = ({ navigation }: Props) => {
+const ExpenseScreen = ({ navigation, route }: Props) => {
   const theme = useTheme<Theme>();
   const { text, border, success } = theme.colors;
   const rowsOfIcons: JSX.Element[] = [];
   const [selectedId, setSelectedId] = useState(0);
 
   useEffect(() => {
-    // Todo: it will either be 'New Expense' or 'Update Expense'
-    navigation.setOptions({ title: 'New Expense' });
+    if (route.params.isEditing) {
+      navigation.setOptions({ title: 'Update Expense' });
+    } else {
+      navigation.setOptions({ title: 'New Expense' });
+    }
   }, []);
 
   const categories: Category[] = [

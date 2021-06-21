@@ -34,15 +34,8 @@ const Home = ({ navigation }: Props) => {
     setExpenses(filterExpenses(expensesDataFromStore, month, year));
   }, [month, year, expensesDataFromStore]);
 
-  const renderItem = (item: Expense) => {
-    return (
-      <ExpenseItem
-        id={item.id}
-        name={item.name}
-        price={item.price}
-        date={item.date}
-      />
-    );
+  const renderItem = (item: Expense, navigation: HomeScreenNavigationProp) => {
+    return <ExpenseItem expense={item} navigation={navigation} />;
   };
 
   return (
@@ -58,7 +51,7 @@ const Home = ({ navigation }: Props) => {
           <FlatList
             keyboardShouldPersistTaps={'handled'}
             data={expenses}
-            renderItem={({ item }) => renderItem(item)}
+            renderItem={({ item }) => renderItem(item, navigation)}
             keyExtractor={(item) => item.id.toString()}
           />
         </Box>

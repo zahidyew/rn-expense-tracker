@@ -20,7 +20,10 @@ const FloatingButton = (props: Props) => {
   const { navigation } = props;
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('ExpenseScreen')}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('ExpenseScreen', { isEditing: false })
+      }>
       <Box
         backgroundColor="primary"
         borderColor="primary"
