@@ -59,7 +59,7 @@ const ExpenseScreen = ({ navigation, route }: Props) => {
 
   return (
     <Box backgroundColor="background" flex={1}>
-      <CategoriesIcons />
+      <CategoriesIcons itemName={expense?.name} />
     </Box>
   );
 };

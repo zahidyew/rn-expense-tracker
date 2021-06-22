@@ -3,7 +3,7 @@ import { getDate } from '@src/helpers/Dates';
 import { useAppDispatch } from '@src/redux/reduxHooks';
 import { addNewExpense } from '@src/redux/slices/expenses';
 import { Theme } from '@src/styles/restyle';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -16,12 +16,23 @@ export interface Category {
   icon: string;
 }
 
-const CategoriesIcons = () => {
+// need to make sure each category name is unique
+interface Props {
+  itemName?: string;
+}
+
+const CategoriesIcons = (props: Props) => {
   const theme = useTheme<Theme>();
   const { text, border, success } = theme.colors;
   const rowsOfIcons: JSX.Element[] = [];
-  const [selectedId, setSelectedId] = useState(0);
+  // const [selectedId, setSelectedId] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const dispatch = useAppDispatch();
+  const { itemName } = props;
+
+  useEffect(() => {
+    setSelectedCategory(itemName ? itemName : '');
+  }, [itemName]);
 
   const categories: Category[] = [
     {
@@ -116,7 +127,7 @@ const CategoriesIcons = () => {
             <Box key={item.id} flex={1} alignItems="center">
               <TouchableOpacity
                 onPress={() => {
-                  setSelectedId(item.id);
+                  setSelectedCategory(item.name);
                   /* dispatch(
                     addNewExpense({
                       id: generateId(),
@@ -128,7 +139,7 @@ const CategoriesIcons = () => {
                   ); */
                 }}
                 style={
-                  selectedId === item.id
+                  selectedCategory === item.name
                     ? [styles.roundContainer, { backgroundColor: success }]
                     : [styles.roundContainer, { backgroundColor: border }]
                 }>
