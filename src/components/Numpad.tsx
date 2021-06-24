@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { createBox, createText, useTheme } from '@shopify/restyle';
 import { Theme } from '@styles/restyle';
 import { getDate } from '@src/helpers/Dates';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface Props {
   price: string;
@@ -17,7 +18,7 @@ const Numpad = (props: Props) => {
   const [price, setPrice] = useState('0');
   const date = props.date ?? getDate('dayMonthYear');
   const theme = useTheme<Theme>();
-  const { border } = theme.colors;
+  const { border, text, highlight } = theme.colors;
   const numpadFirstRow = ['7', '8', '9'];
   const numpadSecondRow = ['4', '5', '6'];
   const numpadThirdRow = ['1', '2', '3'];
@@ -44,7 +45,7 @@ const Numpad = (props: Props) => {
           }
         }}
         style={[styles.numpadButtons, { borderColor: border }]}>
-        <Text variant="body">{number}</Text>
+        <Text variant="numpadText">{number}</Text>
       </TouchableOpacity>
     );
   };
@@ -64,7 +65,9 @@ const Numpad = (props: Props) => {
         borderWidth={0.5}
         borderColor="border">
         <Box paddingRight="ms">
-          <Text variant="body">{price}</Text>
+          <Text variant="numpadText" fontSize={24}>
+            {price}
+          </Text>
         </Box>
       </Box>
       <Box flex={1} flexDirection="row" borderWidth={0.5} borderColor="border">
@@ -82,7 +85,7 @@ const Numpad = (props: Props) => {
         })}
         <TouchableOpacity
           style={[styles.numpadButtons, { borderColor: border }]}>
-          <Text variant="body">{'+'}</Text>
+          <Text variant="numpadText">{'+'}</Text>
         </TouchableOpacity>
       </Box>
       <Box flex={1} flexDirection="row" borderWidth={0.5} borderColor="border">
@@ -91,7 +94,7 @@ const Numpad = (props: Props) => {
         })}
         <TouchableOpacity
           style={[styles.numpadButtons, { borderColor: border }]}>
-          <Text variant="body">{'-'}</Text>
+          <Text variant="numpadText">{'-'}</Text>
         </TouchableOpacity>
       </Box>
       <Box flex={1} flexDirection="row" borderWidth={0.5} borderColor="border">
@@ -103,7 +106,7 @@ const Numpad = (props: Props) => {
             setPrice(price + '.');
           }}
           style={[styles.numpadButtons, { borderColor: border }]}>
-          <Text variant="body">.</Text>
+          <Text variant="numpadText">.</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -113,7 +116,7 @@ const Numpad = (props: Props) => {
             setPrice(price + '0');
           }}
           style={[styles.numpadButtons, { borderColor: border }]}>
-          <Text variant="body">0</Text>
+          <Text variant="numpadText">0</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -123,14 +126,17 @@ const Numpad = (props: Props) => {
             setPrice(price.substr(0, price.length - 1));
           }}
           style={[styles.numpadButtons, { borderColor: border }]}>
-          <Text variant="body">x</Text>
+          <Ionicons name={'backspace-outline'} size={26} color={text} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             props.onClickSubmit(price, date);
           }}
-          style={[styles.numpadButtons, { borderColor: border }]}>
-          <Text variant="body">{'>'}</Text>
+          style={[
+            styles.numpadButtons,
+            { borderColor: border, backgroundColor: highlight },
+          ]}>
+          <Ionicons name={'checkmark-circle-outline'} size={26} color={text} />
         </TouchableOpacity>
       </Box>
     </Box>

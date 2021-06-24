@@ -71,6 +71,10 @@ const theme = createTheme({
       fontWeight: 'bold',
       color: 'success',
     },
+    numpadText: {
+      fontSize: 20,
+      color: 'text',
+    },
   },
   cardVariants: {
     expensesCard: {
