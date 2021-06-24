@@ -2,10 +2,9 @@ import { Expense } from '@models/Expense';
 import { createBox, createText } from '@shopify/restyle';
 import { HomeScreenNavigationProp } from '@src/containers/Home';
 import { Theme } from '@styles/restyle';
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Card from './Card';
-import NewExpenseModal from './NewExpenseModal';
 
 interface Props {
   expense: Expense;
@@ -17,11 +16,9 @@ const Text = createText<Theme>();
 
 const ExpenseItem = (props: Props) => {
   const { id, name, price, date } = props.expense;
-  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.container}>
-      {/* <TouchableOpacity onPress={() => setModalVisible(true)}> */}
       <TouchableOpacity
         onPress={() =>
           props.navigation.navigate('ExpenseScreen', {
@@ -39,12 +36,6 @@ const ExpenseItem = (props: Props) => {
           </View>
         </Card>
       </TouchableOpacity>
-      <NewExpenseModal
-        isOpen={modalVisible}
-        closeModal={setModalVisible}
-        expense={{ id, name, price, date }}
-        isUpdate={true}
-      />
     </View>
   );
 };

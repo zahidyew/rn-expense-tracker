@@ -2,7 +2,6 @@ import DateBar from '@components/DateBar';
 import ExpenseItem from '@components/ExpenseItem';
 import ExpensesBox from '@components/ExpensesBox';
 import FloatingButton from '@components/FloatingButton';
-import NewExpenseModal from '@components/NewExpenseModal';
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { useAppSelector } from '@redux/reduxHooks';
@@ -25,7 +24,6 @@ type Props = {
 const Box = createBox<Theme>();
 
 const Home = ({ navigation }: Props) => {
-  const [modalVisible, setModalVisible] = useState(false);
   const expensesDataFromStore = useAppSelector((state) => state.expenses);
   const { month, year } = useAppSelector((state) => state.date);
   const [expenses, setExpenses] = useState(expensesDataFromStore);
@@ -59,7 +57,6 @@ const Home = ({ navigation }: Props) => {
       <View style={styles.floatingBtnContainer}>
         <FloatingButton navigation={navigation} />
       </View>
-      <NewExpenseModal isOpen={modalVisible} closeModal={setModalVisible} />
     </Box>
   );
 };
