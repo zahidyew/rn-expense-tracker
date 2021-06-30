@@ -105,6 +105,10 @@ const Numpad = (props: Props) => {
     setPrice(`${price.trim()} - `);
   };
 
+  const roundToTwo = (num: number) => {
+    return Math.round((num + Number.EPSILON) * 100) / 100;
+  };
+
   // Todo: improve calculation method.
   // Known issue: x +y = x. Because space is needed to split string.
   const calculate = (price: string) => {
@@ -114,10 +118,14 @@ const Numpad = (props: Props) => {
       return firstNum;
     }
     if (operator === '+') {
-      return (parseFloat(firstNum) + parseFloat(secondNum)).toString();
+      return roundToTwo(
+        parseFloat(firstNum) + parseFloat(secondNum),
+      ).toString();
     }
     if (operator === '-') {
-      return (parseFloat(firstNum) - parseFloat(secondNum)).toString();
+      return roundToTwo(
+        parseFloat(firstNum) - parseFloat(secondNum),
+      ).toString();
     }
     return firstNum ?? 0;
   };
