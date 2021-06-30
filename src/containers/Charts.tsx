@@ -1,20 +1,26 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { createBox, createText } from '@shopify/restyle';
 import { Theme } from '@styles/restyle';
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from 'react-native-chart-kit';
+import { PieChart } from 'react-native-chart-kit';
+import { useAppSelector } from '@src/redux/reduxHooks';
+import { Expense } from '@src/models/Expense';
 
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
 
+interface ChartData {
+  name: string;
+  total: number;
+  color: string;
+  legendFontColor: string;
+  legendFontSize: number;
+}
+
 const Charts = () => {
+  const screenWidth = Dimensions.get('window').width - 50;
+  const expensesDataFromStore = useAppSelector((state) => state.expenses);
+
   const chartConfig = {
     backgroundColor: '#e26a00',
     backgroundGradientFrom: '#fb8c00',
@@ -31,44 +37,40 @@ const Charts = () => {
       stroke: '#ffa726',
     },
   };
-  const screenWidth = Dimensions.get('window').width - 50;
-  const data = [
-    {
-      name: 'Groceries',
-      total: 150,
-      color: 'rgba(131, 167, 234, 1)',
-      legendFontColor: '#7F7F7F',
-      legendFontSize: 10,
-    },
-    {
-      name: 'Coffee',
-      total: 55,
-      color: '#F00',
-      legendFontColor: '#7F7F7F',
-      legendFontSize: 10,
-    },
-    {
-      name: 'Toiletries',
-      total: 45,
-      color: 'red',
-      legendFontColor: '#7F7F7F',
-      legendFontSize: 10,
-    },
-    {
-      name: 'Telco',
-      total: 30,
-      color: 'green',
-      legendFontColor: '#7F7F7F',
-      legendFontSize: 10,
-    },
-    {
-      name: 'Subscriptions',
-      total: 150,
-      color: 'rgb(0, 0, 255)',
-      legendFontColor: '#7F7F7F',
-      legendFontSize: 10,
-    },
-  ];
+
+  const extractCategories = (expenses: Expense[]) => {
+    const categories = new Map();
+
+    expenses.forEach((expense) => {
+      if (categories.has(expense.name)) {
+        const value = categories.get(expense.name);
+        categories.set(expense.name, value + expense.price);
+      } else {
+        categories.set(expense.name, expense.price);
+      }
+    });
+    return categories;
+  };
+
+  const buildChartData = (expenses: Expense[]): ChartData[] => {
+    const chartData: ChartData[] = [];
+    const categories = extractCategories(expenses);
+    const sliceColors = ['red', 'blue', 'yellow', 'green'];
+    let index = 0;
+
+    categories.forEach((value, key) => {
+      chartData.push({
+        name: key,
+        total: value,
+        color: sliceColors[index++],
+        legendFontColor: '#7F7F7F',
+        legendFontSize: 10,
+      });
+    });
+    return chartData;
+  };
+
+  const data = buildChartData(expensesDataFromStore);
 
   return (
     <Box
@@ -79,6 +81,17 @@ const Charts = () => {
       paddingLeft="l"
       paddingRight="l">
       <Text variant="centeredText"> Charts </Text>
+      <PieChart
+        data={data}
+        width={screenWidth}
+        height={220}
+        chartConfig={chartConfig}
+        accessor={'total'}
+        backgroundColor={'white'}
+        paddingLeft={'15'}
+        center={[10, 0]}
+        absolute
+      />
       {/* <LineChart
         data={{
           labels: ['January', 'February', 'March', 'April', 'May', 'June'],
@@ -122,17 +135,6 @@ const Charts = () => {
           borderRadius: 16,
         }}
       /> */}
-      <PieChart
-        data={data}
-        width={screenWidth}
-        height={220}
-        chartConfig={chartConfig}
-        accessor={'total'}
-        backgroundColor={'white'}
-        paddingLeft={'15'}
-        center={[10, 0]}
-        absolute
-      />
     </Box>
   );
 };
