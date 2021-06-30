@@ -84,6 +84,7 @@ const Numpad = (props: Props) => {
           return drawNumpadNumber(num);
         })}
         <TouchableOpacity
+          // Todo: implement addition
           style={[styles.numpadButtons, { borderColor: border }]}>
           <Text variant="numpadText">{'+'}</Text>
         </TouchableOpacity>
@@ -93,6 +94,7 @@ const Numpad = (props: Props) => {
           return drawNumpadNumber(num);
         })}
         <TouchableOpacity
+          // Todo: implement subtraction
           style={[styles.numpadButtons, { borderColor: border }]}>
           <Text variant="numpadText">{'-'}</Text>
         </TouchableOpacity>

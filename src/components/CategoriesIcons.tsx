@@ -58,7 +58,7 @@ const CategoriesIcons = (props: Props) => {
     },
     {
       id: 6,
-      name: 'Clothes',
+      name: 'Clothing',
       icon: 'shirt-outline',
     },
     {
@@ -66,11 +66,66 @@ const CategoriesIcons = (props: Props) => {
       name: 'Telco',
       icon: 'call-outline',
     },
-    /* {
+    {
       id: 8,
-      name: 'Insurance of car yearly',
-      icon: 'car-sport-outline',
-    }, */
+      name: 'Entertainment',
+      icon: 'game-controller-outline',
+    },
+    {
+      id: 9,
+      name: 'Shopping',
+      icon: 'card-outline',
+    },
+    {
+      id: 10,
+      name: 'Health',
+      icon: 'medkit-outline',
+    },
+    {
+      id: 11,
+      name: 'Electronic',
+      icon: 'desktop-outline',
+    },
+    {
+      id: 12,
+      name: 'Snacks',
+      icon: 'ice-cream-outline',
+    },
+    {
+      id: 13,
+      name: 'Gift',
+      icon: 'gift-outline',
+    },
+    {
+      id: 14,
+      name: 'Office',
+      icon: 'business-outline',
+    },
+    {
+      id: 15,
+      name: 'Groceries',
+      icon: 'cart-outline',
+    },
+    {
+      id: 16,
+      name: 'Toiletries',
+      icon: 'water-outline',
+    },
+    {
+      id: 17,
+      name: 'Petrol',
+      icon: 'car-outline',
+    },
+    {
+      id: 18,
+      name: 'Others',
+      icon: 'receipt-outline',
+    },
+  ];
+
+  const categoriesToDisplay = [
+    ...categories,
+    { id: 99, name: 'Add', icon: 'add-outline' },
   ];
 
   const getNumberOfRows = (categoriesLength: number) => {
@@ -119,6 +174,10 @@ const CategoriesIcons = (props: Props) => {
             <Box key={item.id} flex={1} alignItems="center">
               <TouchableOpacity
                 onPress={() => {
+                  // Todo: implement functionality to add new category
+                  if (item.name === 'Add') {
+                    return;
+                  }
                   setSelectedCategory(item.name);
                   onClick(true, item.name);
                 }}
@@ -153,7 +212,7 @@ const CategoriesIcons = (props: Props) => {
     return rowsOfIcons;
   };
 
-  return <>{drawIcons(categories)}</>;
+  return <>{drawIcons(categoriesToDisplay)}</>;
 };
 
 const styles = StyleSheet.create({
