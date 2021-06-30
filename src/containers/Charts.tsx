@@ -70,7 +70,7 @@ const Charts = () => {
     return chartData;
   };
 
-  const data = buildChartData(expensesDataFromStore);
+  const chartData = buildChartData(expensesDataFromStore);
 
   return (
     <Box
@@ -81,17 +81,22 @@ const Charts = () => {
       paddingLeft="l"
       paddingRight="l">
       <Text variant="centeredText"> Charts </Text>
-      <PieChart
-        data={data}
-        width={screenWidth}
-        height={220}
-        chartConfig={chartConfig}
-        accessor={'total'}
-        backgroundColor={'white'}
-        paddingLeft={'15'}
-        center={[10, 0]}
-        absolute
-      />
+      {chartData.length === 0 ? (
+        <Text variant="centeredText"> No data yet </Text>
+      ) : (
+        <PieChart
+          data={chartData}
+          width={screenWidth}
+          height={220}
+          chartConfig={chartConfig}
+          accessor={'total'}
+          backgroundColor={'white'}
+          paddingLeft={'15'}
+          center={[10, 0]}
+          absolute
+        />
+      )}
+
       {/* <LineChart
         data={{
           labels: ['January', 'February', 'March', 'April', 'May', 'June'],
