@@ -16,6 +16,7 @@ const Text = createText<Theme>();
 
 const Numpad = (props: Props) => {
   const [price, setPrice] = useState('0');
+  const [operatorIsClicked, setOperatorIsClicked] = useState(false);
   const date = props.date ?? getDate('dayMonthYear');
   const theme = useTheme<Theme>();
   const { border, text, highlight } = theme.colors;
@@ -48,6 +49,77 @@ const Numpad = (props: Props) => {
         <Text variant="numpadText">{number}</Text>
       </TouchableOpacity>
     );
+  };
+
+  const zero = (price: string) => {
+    if (price === '0') {
+      return;
+    }
+    setPrice(price + '0');
+  };
+
+  const dot = (price: string) => {
+    if (operatorIsClicked) {
+      const [_firstNum, _operator, secondNum] = price.split(' ');
+      if (secondNum && secondNum.includes('.')) {
+        return;
+      }
+      secondNum && setPrice(price + '.');
+      return;
+    }
+    if (price.includes('.')) {
+      return;
+    }
+    setPrice(price + '.');
+  };
+
+  const backspace = (price: string) => {
+    if (price === '0') {
+      return;
+    }
+    setPrice(price.substr(0, price.length - 1));
+  };
+
+  const submit = (price: string) => {
+    if (operatorIsClicked) {
+      setPrice(calculate(price));
+      setOperatorIsClicked(false);
+    } else {
+      props.onClickSubmit(price, date);
+    }
+  };
+
+  const addition = (price: string) => {
+    if (operatorIsClicked) {
+      return;
+    }
+    setOperatorIsClicked(true);
+    setPrice(`${price.trim()} + `);
+  };
+
+  const subtraction = (price: string) => {
+    if (operatorIsClicked) {
+      return;
+    }
+    setOperatorIsClicked(true);
+    setPrice(`${price.trim()} - `);
+  };
+
+  // Todo: improve calculation method.
+  // Known issue: x +y = x. Because space is needed to split string.
+  const calculate = (price: string) => {
+    const [firstNum, operator, secondNum] = price.split(' ');
+
+    if (secondNum === '' || secondNum == null) {
+      return firstNum;
+    }
+    if (operator === '+') {
+      return (parseFloat(firstNum) + parseFloat(secondNum)).toString();
+    }
+    if (operator === '-') {
+      return (parseFloat(firstNum) - parseFloat(secondNum)).toString();
+    }
+    return firstNum ?? 0;
   };
 
   return (
@@ -84,8 +156,10 @@ const Numpad = (props: Props) => {
           return drawNumpadNumber(num);
         })}
         <TouchableOpacity
-          // Todo: implement addition
-          style={[styles.numpadButtons, { borderColor: border }]}>
+          style={[styles.numpadButtons, { borderColor: border }]}
+          onPress={() => {
+            addition(price);
+          }}>
           <Text variant="numpadText">{'+'}</Text>
         </TouchableOpacity>
       </Box>
@@ -94,51 +168,52 @@ const Numpad = (props: Props) => {
           return drawNumpadNumber(num);
         })}
         <TouchableOpacity
-          // Todo: implement subtraction
-          style={[styles.numpadButtons, { borderColor: border }]}>
+          style={[styles.numpadButtons, { borderColor: border }]}
+          onPress={() => {
+            subtraction(price);
+          }}>
           <Text variant="numpadText">{'-'}</Text>
         </TouchableOpacity>
       </Box>
       <Box flex={1} flexDirection="row" borderWidth={0.5} borderColor="border">
         <TouchableOpacity
           onPress={() => {
-            if (price.includes('.')) {
-              return;
-            }
-            setPrice(price + '.');
+            dot(price);
           }}
           style={[styles.numpadButtons, { borderColor: border }]}>
           <Text variant="numpadText">.</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            if (price === '0') {
-              return;
-            }
-            setPrice(price + '0');
+            zero(price);
           }}
           style={[styles.numpadButtons, { borderColor: border }]}>
           <Text variant="numpadText">0</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            if (price === '0') {
-              return;
-            }
-            setPrice(price.substr(0, price.length - 1));
+            backspace(price);
           }}
           style={[styles.numpadButtons, { borderColor: border }]}>
           <Ionicons name={'backspace-outline'} size={26} color={text} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            props.onClickSubmit(price, date);
+            submit(price);
           }}
           style={[
             styles.numpadButtons,
             { borderColor: border, backgroundColor: highlight },
           ]}>
-          <Ionicons name={'checkmark-circle-outline'} size={26} color={text} />
+          {operatorIsClicked ? (
+            <Text variant="numpadText">{'='}</Text>
+          ) : (
+            <Ionicons
+              name={'checkmark-circle-outline'}
+              size={26}
+              color={text}
+            />
+          )}
         </TouchableOpacity>
       </Box>
     </Box>
