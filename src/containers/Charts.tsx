@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { createBox, createText } from '@shopify/restyle';
 import { Theme } from '@styles/restyle';
 import { PieChart } from 'react-native-chart-kit';
 import { useAppSelector } from '@src/redux/reduxHooks';
 import { Expense } from '@src/models/Expense';
+import { filterExpenses } from '@src/helpers/Filters';
 
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
@@ -20,6 +21,12 @@ interface ChartData {
 const Charts = () => {
   const screenWidth = Dimensions.get('window').width - 50;
   const expensesDataFromStore = useAppSelector((state) => state.expenses);
+  const { month, year } = useAppSelector((state) => state.date);
+  const [expenses, setExpenses] = useState(expensesDataFromStore);
+
+  useEffect(() => {
+    setExpenses(filterExpenses(expensesDataFromStore, month, year));
+  }, [month, year, expensesDataFromStore]);
 
   const chartConfig = {
     backgroundColor: '#e26a00',
@@ -70,7 +77,7 @@ const Charts = () => {
     return chartData;
   };
 
-  const chartData = buildChartData(expensesDataFromStore);
+  const chartData = buildChartData(expenses);
 
   return (
     <Box
