@@ -1,10 +1,10 @@
 import { Date } from '@models/Date';
-import { getDate } from '@src/helpers/Dates';
+import { getMonth, getYear } from '@src/helpers/Dates';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialDate: Date = {
-  month: getDate('month'),
-  year: getDate('year'),
+  month: getMonth(),
+  year: getYear(),
 };
 
 export const dateSlice = createSlice({

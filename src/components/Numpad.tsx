@@ -17,7 +17,7 @@ const Text = createText<Theme>();
 const Numpad = (props: Props) => {
   const [price, setPrice] = useState('0');
   const [operatorIsClicked, setOperatorIsClicked] = useState(false);
-  const date = props.date ?? getDate('dayMonthYear');
+  const date = props.date ?? getDate();
   const theme = useTheme<Theme>();
   const { border, text, highlight } = theme.colors;
   const numpadFirstRow = ['7', '8', '9'];

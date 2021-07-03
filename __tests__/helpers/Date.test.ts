@@ -3,7 +3,7 @@ import { getDate, getMonth, getYear } from '../../src/helpers/Dates';
 test('returns full date', () => {
   const [_dayName, month, day, year] = new Date().toDateString().split(' ');
 
-  expect(getDate('dayMonthYear')).toBe(`${day} ${month} ${year}`);
+  expect(getDate()).toBe(`${day} ${month} ${year}`);
 });
 
 test('returns month', () => {
