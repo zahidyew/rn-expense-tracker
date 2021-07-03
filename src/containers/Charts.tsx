@@ -4,30 +4,18 @@ import { createBox, createText } from '@shopify/restyle';
 import { Theme } from '@styles/restyle';
 import { PieChart } from 'react-native-chart-kit';
 import { useAppSelector } from '@src/redux/reduxHooks';
-import { Expense } from '@src/models/Expense';
 import { filterExpenses } from '@src/helpers/Filters';
+import { buildChartData } from './chartsLogic';
 
 const Box = createBox<Theme>();
 const Text = createText<Theme>();
-
-interface ChartData {
-  name: string;
-  total: number;
-  color: string;
-  legendFontColor: string;
-  legendFontSize: number;
-}
 
 const Charts = () => {
   const screenWidth = Dimensions.get('window').width - 50;
   const expensesDataFromStore = useAppSelector((state) => state.expenses);
   const { month, year } = useAppSelector((state) => state.date);
   const [expenses, setExpenses] = useState(expensesDataFromStore);
-
-  useEffect(() => {
-    setExpenses(filterExpenses(expensesDataFromStore, month, year));
-  }, [month, year, expensesDataFromStore]);
-
+  const chartData = buildChartData(expenses);
   const chartConfig = {
     backgroundColor: '#e26a00',
     backgroundGradientFrom: '#fb8c00',
@@ -45,39 +33,9 @@ const Charts = () => {
     },
   };
 
-  const extractCategories = (expenses: Expense[]) => {
-    const categories = new Map();
-
-    expenses.forEach((expense) => {
-      if (categories.has(expense.name)) {
-        const value = categories.get(expense.name);
-        categories.set(expense.name, value + expense.price);
-      } else {
-        categories.set(expense.name, expense.price);
-      }
-    });
-    return categories;
-  };
-
-  const buildChartData = (expenses: Expense[]): ChartData[] => {
-    const chartData: ChartData[] = [];
-    const categories = extractCategories(expenses);
-    const sliceColors = ['red', 'blue', 'yellow', 'green'];
-    let index = 0;
-
-    categories.forEach((value, key) => {
-      chartData.push({
-        name: key,
-        total: value,
-        color: sliceColors[index++],
-        legendFontColor: '#7F7F7F',
-        legendFontSize: 10,
-      });
-    });
-    return chartData;
-  };
-
-  const chartData = buildChartData(expenses);
+  useEffect(() => {
+    setExpenses(filterExpenses(expensesDataFromStore, month, year));
+  }, [month, year, expensesDataFromStore]);
 
   return (
     <Box
