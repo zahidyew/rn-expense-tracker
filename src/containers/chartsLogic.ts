@@ -8,6 +8,9 @@ interface ChartData {
   legendFontSize: number;
 }
 
+// Todo: create a proper color palette for chart colors
+export const sliceColors = ['red', 'blue', 'yellow', 'green'];
+
 export const extractCategories = (expenses: Expense[]) => {
   const categories = new Map();
 
@@ -25,7 +28,6 @@ export const extractCategories = (expenses: Expense[]) => {
 export const buildChartData = (expenses: Expense[]): ChartData[] => {
   const chartData: ChartData[] = [];
   const categories = extractCategories(expenses);
-  const sliceColors = ['red', 'blue', 'yellow', 'green'];
   let index = 0;
 
   categories.forEach((value, key) => {
