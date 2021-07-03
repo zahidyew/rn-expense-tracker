@@ -16,9 +16,6 @@
       "@redux/*": ["src/redux/*"],
       "@models/*": ["src/models/*"],
       "@helpers/*": ["src/helpers/*"],
-      "@img/*": ["src/img/*"],
-      "@colors": ["src/colors/colors"],
-      "@constants/*": ["src/constants/*"],
       "@components/*": ["src/components/*"],
       "@containers/*": ["src/containers/*"],
       "@styles/*": ["src/styles/*"]
