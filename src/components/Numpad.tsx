@@ -20,9 +20,6 @@ const Numpad = (props: Props) => {
   const date = props.date ?? getDate();
   const theme = useTheme<Theme>();
   const { border, text, highlight } = theme.colors;
-  const numpadFirstRow = ['7', '8', '9'];
-  const numpadSecondRow = ['4', '5', '6'];
-  const numpadThirdRow = ['1', '2', '3'];
 
   useEffect(() => {
     setPrice(props.price);
@@ -33,23 +30,6 @@ const Numpad = (props: Props) => {
       setPrice('0');
     }
   }, [price]);
-
-  const drawNumpadNumber = (number: string) => {
-    return (
-      <TouchableOpacity
-        key={number}
-        onPress={() => {
-          if (price === '0') {
-            setPrice(number);
-          } else {
-            setPrice(price + number);
-          }
-        }}
-        style={[styles.numpadButtons, { borderColor: border }]}>
-        <Text variant="numpadText">{number}</Text>
-      </TouchableOpacity>
-    );
-  };
 
   const zero = (price: string) => {
     if (price === '0') {
@@ -130,13 +110,8 @@ const Numpad = (props: Props) => {
     return firstNum ?? 0;
   };
 
-  return (
-    <Box
-      backgroundColor="foreground"
-      position="absolute"
-      bottom={0}
-      height="35%"
-      width="100%">
+  const numberDisplayArea = (price: string) => {
+    return (
       <Box
         flex={1}
         flexDirection="row"
@@ -150,18 +125,47 @@ const Numpad = (props: Props) => {
           </Text>
         </Box>
       </Box>
+    );
+  };
+
+  const drawNumpadNumber = (number: string, price: string) => {
+    return (
+      <TouchableOpacity
+        key={number}
+        onPress={() => {
+          if (price === '0') {
+            setPrice(number);
+          } else {
+            setPrice(price + number);
+          }
+        }}
+        style={[styles.numpadButtons, { borderColor: border }]}>
+        <Text variant="numpadText">{number}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const firstNumpadRow = (price: string) => {
+    const numpadFirstRow = ['7', '8', '9'];
+    return (
       <Box flex={1} flexDirection="row" borderWidth={0.5} borderColor="border">
         {numpadFirstRow.map((num) => {
-          return drawNumpadNumber(num);
+          return drawNumpadNumber(num, price);
         })}
         <TouchableOpacity
           style={[styles.numpadButtons, { borderColor: border }]}>
           <Text variant="body">{date.substr(0, 6)}</Text>
         </TouchableOpacity>
       </Box>
+    );
+  };
+
+  const secondNumpadRow = (price: string) => {
+    const numpadSecondRow = ['4', '5', '6'];
+    return (
       <Box flex={1} flexDirection="row" borderWidth={0.5} borderColor="border">
         {numpadSecondRow.map((num) => {
-          return drawNumpadNumber(num);
+          return drawNumpadNumber(num, price);
         })}
         <TouchableOpacity
           style={[styles.numpadButtons, { borderColor: border }]}
@@ -171,9 +175,15 @@ const Numpad = (props: Props) => {
           <Text variant="numpadText">{'+'}</Text>
         </TouchableOpacity>
       </Box>
+    );
+  };
+
+  const thirdNumpadRow = (price: string) => {
+    const numpadThirdRow = ['1', '2', '3'];
+    return (
       <Box flex={1} flexDirection="row" borderWidth={0.5} borderColor="border">
         {numpadThirdRow.map((num) => {
-          return drawNumpadNumber(num);
+          return drawNumpadNumber(num, price);
         })}
         <TouchableOpacity
           style={[styles.numpadButtons, { borderColor: border }]}
@@ -183,6 +193,11 @@ const Numpad = (props: Props) => {
           <Text variant="numpadText">{'-'}</Text>
         </TouchableOpacity>
       </Box>
+    );
+  };
+
+  const fourthNumpadRow = (price: string, operatorIsClicked: boolean) => {
+    return (
       <Box flex={1} flexDirection="row" borderWidth={0.5} borderColor="border">
         <TouchableOpacity
           onPress={() => {
@@ -224,6 +239,21 @@ const Numpad = (props: Props) => {
           )}
         </TouchableOpacity>
       </Box>
+    );
+  };
+
+  return (
+    <Box
+      backgroundColor="foreground"
+      position="absolute"
+      bottom={0}
+      height="35%"
+      width="100%">
+      {numberDisplayArea(price)}
+      {firstNumpadRow(price)}
+      {secondNumpadRow(price)}
+      {thirdNumpadRow(price)}
+      {fourthNumpadRow(price, operatorIsClicked)}
     </Box>
   );
 };
